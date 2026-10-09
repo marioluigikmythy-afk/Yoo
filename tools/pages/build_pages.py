@@ -84,7 +84,7 @@ def shell(*, title, description, path, body, base="", robots="index, follow", ho
         <button type="button" class="footer__cookie" data-consent-open>Cookie settings</button>
       </nav>
     </div>
-    <p class="footer__legal">Questions? Email <a href="mailto:support@tranom.com">support@tranom.com</a>. Tranom is not affiliated with, endorsed by, or sponsored by Roblox Corporation. Roblox is a trademark of Roblox Corporation. © 2026 Tranom.</p>
+    <p class="footer__legal">Questions? Email <a href="mailto:support@tranom.com">support@tranom.com</a>. Tranom is not affiliated with, endorsed by, or sponsored by Roblox Corporation. Roblox is a trademark of Roblox Corporation. © 2026 Tranom Technologies LLC.</p>
   </footer>
 </div>
 

@@ -13,7 +13,7 @@ Fill these in before the site goes live:
 | **Form endpoint.** The "Start recovery" form needs a service to receive submissions. Create a form on [Formspree](https://formspree.io) (or a similar service that accepts `POST` requests) and paste its URL into `data-endpoint=""` on `#start-form`. Until then the form tells visitors to email you instead. | `index.html` |
 | **Domain.** Every absolute URL uses `https://tranom.com`. Replace it if your domain is different. | `index.html`, `tools/pages/build_pages.py`, `sitemap.xml`, `robots.txt` |
 | **Support email.** `support@tranom.com` is used throughout. | `index.html`, `assets/js/main.js`, `tools/pages/build_pages.py`, `tools/pages/content/*.html` |
-| **Legal details.** Replace `[Legal business name]`, `[Business address]` and `[Country or state]`. | `tools/pages/content/privacy.html`, `tools/pages/content/terms.html` |
+| **Governing law.** The Terms use the State of Washington, based on the Spokane address. Change it if Tranom Technologies LLC is registered in another state. | `tools/pages/content/terms.html` |
 | **Policy review.** The Privacy Policy and Terms are a starting point, not legal advice. Have them checked, especially the 90-day data retention, the refund rules, and the statement that a person reviews AI-assisted work. | same files |
 
 After editing anything in `tools/pages/`, rebuild the pages:
