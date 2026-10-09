@@ -83,6 +83,8 @@ assets/fonts/           Plus Jakarta Sans (self-hosted)
 assets/img/             WebP renders, icons, social image
 tools/pages/            page generator, business facts and the text of every page
 tools/render/           Three.js scenes that generate the images
+tools/video/            source for the TikTok videos (stage, voice script, music and sound effects)
+marketing/tiktok/       finished TikTok videos, cover, subtitles and post copy
 ```
 
 ## Regenerating the images
@@ -96,6 +98,26 @@ npm run build   # renders all scenes, writes assets/img/*.webp, icons and og-ima
 ```
 
 Rendering uses headless Chromium through `playwright-core`. Set `CHROMIUM_PATH` if Chromium isn't at `/opt/pw-browsers/chromium`. The Python steps need Pillow.
+
+## TikTok videos
+
+`marketing/tiktok/` has two finished vertical videos plus a cover, subtitles and captions to paste (`post-copy.md`):
+
+- `tranom_tiktok_voice.mp4` (1:00): a voiceover explains the whole service, with word-by-word captions.
+- `tranom_tiktok_music.mp4` (0:56): the same story with music, sound effects and on-screen text, no voice.
+
+Both are built from code in `tools/video`, so a price or wording change is a rebuild, not a re-edit:
+
+```bash
+cd tools/render && npm install      # 3D backgrounds
+cd ../video && npm install          # browser, offline voice model (about 190 MB)
+npm run build                       # renders, voices, mixes and writes marketing/tiktok
+```
+
+- **Words:** the voiceover lines are in `tools/video/script.json`. The on-screen text and the captions for the music-only version are in `stage/index.html` and `timeline.py`.
+- **Voice:** Kokoro (Apache-2.0), speaker 1 "Bella", run offline through sherpa-onnx. Nothing is sent to a speech service.
+- **Music and sound effects:** synthesized from scratch in `audio.py`, so there's nothing to license.
+- Needs Node 18+, ffmpeg, and Python 3 with numpy, scipy and Pillow. A full build took about 10 minutes on the machine used to make them. Set `SKIP_RENDERS=1` to reuse the background images already in `stage/`.
 
 ## Legal
 

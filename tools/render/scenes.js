@@ -126,6 +126,7 @@ export const scenes = {
   },
 };
 
+};
 
 scenes.t1hero = (renderer, w, h) => {
   const { scene, camera } = base(renderer, w, h, {
@@ -161,4 +162,61 @@ scenes.t1card = (renderer, w, h) => {
   scene.add(bot);
   addLights(scene, { sun: [-6, 8, 7], target: [0, 0, 0], shadowBox: 6 });
   return { scene, camera, dof: { focus: 19, aperture: 0.0016, maxblur: 0.006 } };
+};
+
+/* ---------- vertical 9:16 scenes for video ---------- */
+scenes.vhero = (renderer, w, h) => {
+  const { scene, camera } = base(renderer, w, h, { fov: 46, pos: [0, 2.1, 12], look: [0, 1.75, 0], fog: ['#c6c7f0', 15, 46] });
+  const field = makeField(scene, camera, {
+    seed: 111, x0: -9, x1: 9, z0: -34, z1: 13, density: 1300, refDist: 12, flowerSize: [0.02, 0.04], grassDensity: 3.5, grassMinDist: 6,
+    mounds: [[0.6, 0.6, 3.6, 0.45], [-2.2, -1.5, 3, 0.4], [-6, -8, 6, 0.6], [6, -9, 6, 0.6]], hillAmp: 0.6, bushDensity: 0.45, bushR: [0.6, 1.6], bushH: [0.4, 0.7],
+  });
+  const lock = makePadlock({ open: 0.8 });
+  lock.scale.setScalar(0.8);
+  sink(field, lock, 0.7, 0.8, 0.55);
+  lock.rotation.set(0.05, -0.4, -0.1);
+  scene.add(lock);
+  const key = makeKey();
+  key.scale.setScalar(0.5);
+  sink(field, key, -1.45, -1.2, 0.3);
+  key.rotation.set(0.1, 0.35, 0.5);
+  scene.add(key);
+  addLights(scene, { sun: [-8, 7, 4], target: [0, 0, 0], shadowBox: 9, hemiK: 0.45 });
+  return { scene, camera, dof: { focus: 11.6, aperture: 0.0016, maxblur: 0.006 } };
+};
+
+scenes.vt1 = (renderer, w, h) => {
+  const { scene, camera } = base(renderer, w, h, {
+    fov: 46, pos: [0, 2.2, 11], look: [0, 1.9, 0],
+    sky: [[0, '#2c2745'], [0.38, '#342d5c'], [0.58, '#4a3f8c'], [0.78, '#6f61c4'], [1, '#8b7dda']],
+    fog: ['#5b4ea8', 12, 40], env: { dusk: true },
+  });
+  const field = makeField(scene, camera, {
+    seed: 121, x0: -9, x1: 9, z0: -34, z1: 12, density: 1300, refDist: 11, flowerSize: [0.02, 0.04], grassDensity: 3, grassMinDist: 6,
+    mounds: [[0, 0.8, 3.6, 0.4], [-6, -6, 6, 0.6], [6, -7, 6, 0.6]], hillAmp: 0.6, bushDensity: 0.45, bushR: [0.6, 1.6], bushH: [0.4, 0.7],
+  });
+  const bot = makeBot({ font: window.__font, glowK: 1.7 });
+  bot.scale.setScalar(0.78);
+  bot.position.set(0.1, field.surf(0.1, 0.8) + 0.1, 0.8);
+  bot.rotation.set(0.02, -0.28, 0.02);
+  scene.add(bot);
+  const eyeLight = new THREE.PointLight('#cfc6ff', 0.7, 3.5, 2); eyeLight.position.set(0, bot.position.y + 1.1, 2.2); scene.add(eyeLight);
+  addFireflies(scene, field, { n: 30, x0: -5, x1: 5, z0: -8, z1: 3, k: 1.6, seed: 9 });
+  addDuskLights(scene, { moon: [-7, 7, -7] });
+  return { scene, camera, dof: { focus: 10.3, aperture: 0.0016, maxblur: 0.006 }, bloom: { strength: 0.42, radius: 0.5, threshold: 0.97 } };
+};
+
+scenes.vwelcome = (renderer, w, h) => {
+  const { scene, camera } = base(renderer, w, h, { fov: 44, pos: [0, 2.0, 12], look: [0, 1.75, 0], fog: ['#c6c7f0', 15, 46] });
+  const field = makeField(scene, camera, {
+    seed: 131, x0: -9, x1: 9, z0: -34, z1: 13, density: 1300, refDist: 12, flowerSize: [0.02, 0.04], grassDensity: 3.5, grassMinDist: 6,
+    mounds: [[0.2, 0.6, 3.6, 0.4], [-6, -7, 6, 0.6], [6, -8, 6, 0.6]], hillAmp: 0.6, bushDensity: 0.45, bushR: [0.6, 1.6], bushH: [0.4, 0.7],
+  });
+  const av = makeAvatar({ wave: 1 });
+  av.scale.setScalar(0.45);
+  sink(field, av, 0.25, 0.6, 0.95);
+  av.rotation.set(0, -0.3, 0.03);
+  scene.add(av);
+  addLights(scene, { sun: [-8, 7, 4], target: [0, 0, 0], shadowBox: 9, hemiK: 0.45 });
+  return { scene, camera, dof: { focus: 11.4, aperture: 0.0016, maxblur: 0.006 } };
 };

@@ -1,0 +1,13 @@
+[
+  {"id": "hook",    "say": "Locked out of your Roblox account? Here's how Tranom helps. Honestly."},
+  {"id": "free",    "say": "First, Roblox Support is free. You can always contact them yourself."},
+  {"id": "who",     "say": "Tranom is for when your tickets keep getting rejected, you're not sure what proof to send, or you want someone to follow up."},
+  {"id": "step1",   "say": "Step one. Tell us what happened, in one short form. It's free to send."},
+  {"id": "step2",   "say": "Step two. We work out exactly what proof Roblox needs, and write your support request for you."},
+  {"id": "step3",   "say": "Step three. T one, our case agent, and our team follow up with Roblox every day, until your case is verified and complete."},
+  {"id": "step4",   "say": "Step four. Once you're back in, we help you lock the account down."},
+  {"id": "safe",    "say": "We never ask for your password, codes, or cookies. We only use official Roblox channels, and we're not affiliated with Roblox."},
+  {"id": "honest",  "say": "Only Roblox can restore an account, so no one can guarantee it. We just make your case as strong as it can be."},
+  {"id": "price",   "say": "A standard case is forty nine dollars. A priority case is ninety nine. Cancel before we start, and you get a full refund."},
+  {"id": "cta",     "say": "Tranom. Recover what's yours, at tranom dot com."}
+]

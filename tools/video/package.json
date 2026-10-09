@@ -1,0 +1,14 @@
+{
+  "name": "tranom-tiktok",
+  "private": true,
+  "type": "module",
+  "description": "Builds the two Tranom TikToks: animated 1080x1920 stage, offline voiceover, synthesized music and sound effects.",
+  "scripts": {
+    "build": "bash build.sh"
+  },
+  "dependencies": {
+    "n8n-nodes-ttsbro": "0.1.6",
+    "playwright-core": "1.64.0",
+    "sherpa-onnx-node": "1.13.8"
+  }
+}
