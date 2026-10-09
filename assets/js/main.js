@@ -23,8 +23,8 @@
   }
 
   /* ---------- cookie consent ----------
-     Scripts that need consent are added as
-       <script type="text/plain" data-consent-category="analytics" data-src="https://..."></script>
+     Scripts that need consent are added as script tags with type="text/plain",
+     data-consent-category="analytics" and data-src="https://..." (see README),
      and only run after the visitor accepts. */
   const CONSENT_KEY = 'tranom-consent-v1';
   const banner = $('#consent');
