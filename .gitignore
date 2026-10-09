@@ -3,3 +3,4 @@ tools/render/out/
 .DS_Store
 tools/video/out/
 tools/video/stage/*.woff2
+__pycache__/
