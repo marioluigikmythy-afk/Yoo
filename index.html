@@ -1,0 +1,347 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Tranom</title>
+  <meta name="description" content="Tranom is an AI recovery assistant for Roblox accounts. Get a step-by-step recovery plan, a ready-to-send message for Roblox Support, and a checklist to lock your account down.">
+  <meta name="theme-color" content="#f5f5f5">
+  <meta property="og:title" content="Tranom — Recover What's Yours">
+  <meta property="og:description" content="An AI recovery assistant that helps you get your Roblox account back through official channels.">
+  <meta property="og:image" content="assets/img/og.jpg">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600&display=swap">
+  <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<!--PREVIEW-START-->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="spark" viewBox="0 0 24 24"><path d="M12 0c.6 6.3 5.7 11.4 12 12-6.3.6-11.4 5.7-12 12-.6-6.3-5.7-11.4-12-12C6.3 11.4 11.4 6.3 12 0Z"/></symbol>
+  <symbol id="arrow" viewBox="0 0 24 24"><path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="m5 12.5 4.2 4.2L19 7" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="external" viewBox="0 0 24 24"><path d="M14 5h5v5m0-5-8 8M18 14v4a1 1 0 0 1-1 1H6a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+</svg>
+
+<div class="page">
+  <header class="nav" id="top">
+    <a class="brand" href="#top" aria-label="Tranom home">
+      <svg class="brand__mark" aria-hidden="true"><use href="#spark"/></svg>
+      <span>Tranom</span>
+    </a>
+    <button class="nav__toggle" type="button" id="nav-toggle" aria-expanded="false" aria-controls="nav-links">
+      <span class="sr-only">Menu</span><span class="nav__bars" aria-hidden="true"></span>
+    </button>
+    <nav class="nav__links" id="nav-links" aria-label="Main">
+      <a href="#about">Recovery</a>
+      <a href="#use-cases">Use cases</a>
+      <a href="#how">How it works</a>
+      <a href="#safety">Safety</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <a class="btn btn--navy nav__cta" href="#assistant">Start recovery</a>
+  </header>
+
+  <main>
+    <section class="hero" aria-labelledby="hero-title">
+      <img class="hero__img" src="assets/img/hero.webp" width="2400" height="1310"
+           alt="A lavender flower field with a silver key and an open padlock half hidden among the blossoms">
+      <div class="hero__content">
+        <svg class="hero__mark" aria-hidden="true"><use href="#spark"/></svg>
+        <h1 id="hero-title">Recover What's Yours</h1>
+        <p>An AI recovery assistant for Roblox accounts. Tranom builds your proof of ownership, writes your request to Roblox Support, and helps you lock the account down once it's back.</p>
+        <a class="btn btn--black" href="#assistant">Try it now</a>
+      </div>
+    </section>
+
+    <section class="about" id="about" aria-labelledby="about-title">
+      <div class="about__lead">
+        <h2 id="about-title">What is Tranom?</h2>
+        <a class="btn btn--navy" href="#how">Explore now</a>
+      </div>
+      <p class="about__text">Tranom is an AI assistant that turns a lost Roblox account into a clear recovery plan, using only Roblox's official recovery and support channels.</p>
+    </section>
+
+    <section class="features" aria-label="Why Tranom">
+      <article class="feature feature--wide">
+        <img class="feature__img" src="assets/img/grow.webp" width="1800" height="750" alt="" loading="lazy">
+        <h3>Accounts that come back</h3>
+        <p>Tranom matches your situation to the right recovery path and tells you exactly which proof Roblox Support will ask for.</p>
+      </article>
+      <article class="feature feature--dark">
+        <h3>Never asks for your password</h3>
+        <p>No passwords, cookies or 2-Step codes. Tranom never logs in for you, so you stay in control of your account.</p>
+      </article>
+      <article class="feature feature--dark">
+        <h3>A plan in minutes</h3>
+        <p>Answer four questions and get your steps in order, plus a support message that's ready to send.</p>
+      </article>
+    </section>
+
+    <section class="cases-strip" aria-label="Situations Tranom covers">
+      <p class="cases-strip__label">Covers every way an account gets lost, from a typo to a takeover.</p>
+      <ul class="cases-strip__list">
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="2.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>Forgot password</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg>Forgot username</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6Z"/><path d="M12 8v5m0 3v.01"/></svg>Hacked account</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="m4.5 7 7.5 6 7.5-6"/></svg>Email changed</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10.5 18h3"/></svg>Lost 2-Step</li>
+        <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="8.5"/><path d="m6 6 12 12"/></svg>Banned</li>
+      </ul>
+    </section>
+
+    <section class="cases" id="use-cases" aria-labelledby="cases-title">
+      <div class="cases__intro">
+        <p class="eyebrow">Tranom in action</p>
+        <h2 id="cases-title">Use cases</h2>
+        <p>Tranom covers the most common ways players lose access, from a forgotten password to a hijacked account with a changed email.</p>
+      </div>
+      <div class="cases__list">
+        <article class="case">
+          <div class="case__body">
+            <h3>Hacked account</h3>
+            <p>Someone changed your password or email? Tranom helps you gather proof that the account is yours and drafts a clear ticket for Roblox Support.</p>
+            <a class="link-arrow" href="#assistant" data-situation="hacked"><span class="link-arrow__icon"><svg aria-hidden="true"><use href="#arrow"/></svg></span>Plan my recovery</a>
+          </div>
+          <img class="case__img" src="assets/img/case-hacked.webp" width="1200" height="900" alt="A lavender shield with a check mark rising out of purple flowers" loading="lazy">
+        </article>
+        <article class="case">
+          <div class="case__body">
+            <h3>Forgot password or username</h3>
+            <p>Reset through the email or phone on your account in a few taps. Tranom tells you what to try when the reset email never shows up.</p>
+            <a class="link-arrow" href="#assistant" data-situation="password"><span class="link-arrow__icon"><svg aria-hidden="true"><use href="#arrow"/></svg></span>Plan my recovery</a>
+          </div>
+          <img class="case__img" src="assets/img/case-password.webp" width="1200" height="900" alt="A silver key resting at an angle in a bed of flowers" loading="lazy">
+        </article>
+        <article class="case">
+          <div class="case__body">
+            <h3>Lost 2-Step Verification</h3>
+            <p>New phone, lost authenticator, no backup codes? Tranom shows which options you can still use and what to send Support when none are left.</p>
+            <a class="link-arrow" href="#assistant" data-situation="twostep"><span class="link-arrow__icon"><svg aria-hidden="true"><use href="#arrow"/></svg></span>Plan my recovery</a>
+          </div>
+          <img class="case__img" src="assets/img/case-2sv.webp" width="1200" height="900" alt="A phone showing a six-digit verification code, standing in lavender flowers" loading="lazy">
+        </article>
+        <article class="case">
+          <div class="case__body">
+            <h3>Bans and moderation appeals</h3>
+            <p>Think a ban was a mistake? Tranom helps you write a calm, factual appeal and send it through Roblox's official appeals page.</p>
+            <a class="link-arrow" href="#assistant" data-situation="banned"><span class="link-arrow__icon"><svg aria-hidden="true"><use href="#arrow"/></svg></span>Plan my appeal</a>
+          </div>
+          <img class="case__img" src="assets/img/case-appeal.webp" width="1200" height="900" alt="A sealed envelope with a silver seal among purple flowers" loading="lazy">
+        </article>
+      </div>
+    </section>
+
+    <section class="how" id="how" aria-labelledby="how-title">
+      <div class="how__head">
+        <p class="eyebrow eyebrow--light">How it works</p>
+        <h2 id="how-title">From locked out to logged in</h2>
+      </div>
+      <ol class="how__steps">
+        <li>
+          <span class="how__num">1</span>
+          <h3>Tell Tranom what happened</h3>
+          <p>Pick your situation and what you can still reach: the email, the phone, backup codes, or a device that's still signed in.</p>
+        </li>
+        <li>
+          <span class="how__num">2</span>
+          <h3>Get your recovery plan</h3>
+          <p>See the official steps for your case in the right order, plus the proof of ownership worth collecting before you write to Support.</p>
+        </li>
+        <li>
+          <span class="how__num">3</span>
+          <h3>Send it, then lock it down</h3>
+          <p>Copy your ready-made message into the Roblox Support form. Once you're back in, work through the security checklist.</p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="assistant" id="assistant" aria-labelledby="assistant-title">
+      <div class="assistant__head">
+        <div>
+          <p class="eyebrow">Recovery assistant</p>
+          <h2 id="assistant-title">Build your recovery plan</h2>
+        </div>
+        <p>Answer four questions and your plan updates as you go. Everything runs in your browser, and Tranom never asks for your password.</p>
+      </div>
+
+      <div class="tool">
+        <form class="tool__form" id="recovery-form" novalidate>
+          <p class="tool__example" id="example-note"><svg aria-hidden="true"><use href="#spark"/></svg>Filled in with an example. Change the answers to match your case.</p>
+
+          <fieldset class="q">
+            <legend><span class="q__n">1</span>What happened?</legend>
+            <div class="chips" id="situation-chips">
+              <label class="chip"><input type="radio" name="situation" id="sit-password" value="password"><span>Forgot my password</span></label>
+              <label class="chip"><input type="radio" name="situation" id="sit-username" value="username"><span>Forgot my username</span></label>
+              <label class="chip"><input type="radio" name="situation" id="sit-hacked" value="hacked" checked><span>Someone hacked my account</span></label>
+              <label class="chip"><input type="radio" name="situation" id="sit-twostep" value="twostep"><span>Lost 2-Step Verification</span></label>
+              <label class="chip"><input type="radio" name="situation" id="sit-banned" value="banned"><span>Banned or moderated</span></label>
+              <label class="chip"><input type="radio" name="situation" id="sit-other" value="other"><span>Something else</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend><span class="q__n">2</span>What can you still reach?</legend>
+            <div class="chips">
+              <label class="chip chip--check"><input type="checkbox" name="access" id="acc-email" value="email"><span>The email on the account</span></label>
+              <label class="chip chip--check"><input type="checkbox" name="access" id="acc-phone" value="phone"><span>The phone number on the account</span></label>
+              <label class="chip chip--check"><input type="checkbox" name="access" id="acc-backup" value="backup"><span>2-Step backup codes</span></label>
+              <label class="chip chip--check"><input type="checkbox" name="access" id="acc-session" value="session"><span>A device that's still signed in</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend><span class="q__n">3</span>What proof do you have?</legend>
+            <div class="chips">
+              <label class="chip chip--check"><input type="checkbox" name="proof" id="pr-receipts" value="receipts" checked><span>Robux or Premium receipts</span></label>
+              <label class="chip chip--check"><input type="checkbox" name="proof" id="pr-giftcard" value="giftcard"><span>A gift card I redeemed</span></label>
+              <label class="chip chip--check"><input type="checkbox" name="proof" id="pr-firstemail" value="firstEmail" checked><span>The first email I used</span></label>
+              <label class="chip chip--check"><input type="checkbox" name="proof" id="pr-created" value="created"><span>When I made the account</span></label>
+              <label class="chip chip--check"><input type="checkbox" name="proof" id="pr-oldnames" value="oldNames"><span>My old usernames</span></label>
+              <label class="chip chip--check"><input type="checkbox" name="proof" id="pr-device" value="device" checked><span>The device I play on</span></label>
+            </div>
+          </fieldset>
+
+          <fieldset class="q">
+            <legend><span class="q__n">4</span>A few details for your message</legend>
+            <div class="fields">
+              <label class="field"><span>Roblox username</span><input type="text" id="f-username" autocomplete="off" spellcheck="false" placeholder="Your username" value="SkyBuilder207"></label>
+              <label class="field"><span>Email for Support to reply to</span><input type="email" id="f-email" autocomplete="email" placeholder="you@example.com" value="you@example.com"></label>
+              <label class="field"><span>When did you lose access?</span><input type="date" id="f-date" value="2026-10-06"></label>
+              <label class="field field--full"><span>What happened, in your words</span><textarea id="f-details" rows="3" placeholder="For example: my password and email were changed after I clicked a link.">My password and email were changed after I signed in through a link someone sent me in a game chat.</textarea></label>
+            </div>
+          </fieldset>
+        </form>
+
+        <div class="tool__result" id="result" aria-live="polite">
+          <div class="result__top">
+            <div>
+              <p class="result__kicker">Your recovery path</p>
+              <h3 class="result__path" id="r-path">Roblox Support ticket</h3>
+            </div>
+            <div class="meter" id="r-meter">
+              <p class="meter__label">Proof of ownership <strong id="r-strength">Fair</strong></p>
+              <div class="meter__bar" aria-hidden="true"><span id="r-bar"></span></div>
+            </div>
+          </div>
+          <p class="result__summary" id="r-summary"></p>
+
+          <ol class="steps" id="r-steps"></ol>
+
+          <div class="message">
+            <div class="message__head">
+              <p id="r-msg-title">Message for Roblox Support</p>
+              <button type="button" class="btn btn--navy btn--sm" id="copy-btn">Copy message</button>
+            </div>
+            <label class="sr-only" for="r-message">Message draft</label>
+            <textarea id="r-message" rows="12" spellcheck="true"></textarea>
+            <p class="message__note" id="copy-status" role="status"></p>
+          </div>
+
+          <div class="warn">
+            <svg aria-hidden="true" viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6Z"/></svg>
+            <p><strong>Roblox Support never asks for your password, and neither does Tranom.</strong> Anyone who offers to recover your account for your password, your browser cookies or Robux is running a scam.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="checklist" id="checklist">
+        <div class="checklist__head">
+          <h3>Once you're back in</h3>
+          <p><span id="cl-count">0</span> of 6 done</p>
+        </div>
+        <ul class="checklist__list">
+          <li><label><input type="checkbox" id="cl-1"><span>Change your password to one you don't use anywhere else.</span></label></li>
+          <li><label><input type="checkbox" id="cl-2"><span>Turn on 2-Step Verification and save the backup codes somewhere safe.</span></label></li>
+          <li><label><input type="checkbox" id="cl-3"><span>Sign out of all other sessions from Settings, then Security.</span></label></li>
+          <li><label><input type="checkbox" id="cl-4"><span>Check that the email and phone on the account are yours and verified.</span></label></li>
+          <li><label><input type="checkbox" id="cl-5"><span>Secure your email account too, with its own strong password and 2-step sign-in.</span></label></li>
+          <li><label><input type="checkbox" id="cl-6"><span>Never paste code into your browser or install "free Robux" tools. They're the most common way accounts get stolen.</span></label></li>
+        </ul>
+      </div>
+    </section>
+
+    <section class="safety" id="safety" aria-labelledby="safety-title">
+      <div class="safety__lead">
+        <p class="eyebrow">Safety</p>
+        <h2 id="safety-title">Built to keep you in control</h2>
+      </div>
+      <div class="safety__grid">
+        <article>
+          <h3>No passwords, ever</h3>
+          <p>Tranom never signs in to your account and never asks for passwords, verification codes or browser cookies.</p>
+        </article>
+        <article>
+          <h3>Official channels only</h3>
+          <p>Every step points to Roblox's own reset page, Support form or appeals page. Only Roblox can restore an account.</p>
+        </article>
+        <article>
+          <h3>Stays on your device</h3>
+          <p>Your answers are used to build the plan in your browser. Nothing you type is sent to a server.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="faq" id="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title">Questions</h2>
+      <div class="faq__list">
+        <details>
+          <summary>Is Tranom part of Roblox?</summary>
+          <p>No. Tranom is an independent tool and isn't affiliated with Roblox Corporation. It prepares you for Roblox's official recovery process, and Roblox Support makes the final decision.</p>
+        </details>
+        <details>
+          <summary>Can Tranom guarantee I get my account back?</summary>
+          <p>Nobody can promise that, and you should be wary of anyone who does. Only Roblox can restore an account. Tranom helps you send the clearest request with the strongest proof you have.</p>
+        </details>
+        <details>
+          <summary>What counts as proof of ownership?</summary>
+          <p>Receipts for Robux or Premium purchases, a gift card you redeemed, the first email used on the account, roughly when you created it, past usernames, and the devices you play on. Receipts and gift cards usually carry the most weight.</p>
+        </details>
+        <details>
+          <summary>The reset email never arrived. What now?</summary>
+          <p>Check your spam and promotions folders, wait a few minutes, and use only the newest link. If the email address on the account was changed by someone else, choose "Someone hacked my account" in the assistant.</p>
+        </details>
+        <details>
+          <summary>How long does Roblox Support take to answer?</summary>
+          <p>It varies. Reply from the same email address when they write back, and avoid opening several tickets for the same problem.</p>
+        </details>
+        <details>
+          <summary>I'm under 13. Can I still use Tranom?</summary>
+          <p>Yes, but ask a parent or guardian to help. They can contact Roblox Support with you and keep the account secure afterwards.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta" aria-labelledby="cta-title">
+      <img class="cta__img" src="assets/img/welcome.webp" width="2400" height="1040" alt="A friendly blocky character waving from a field of lavender flowers" loading="lazy">
+      <div class="cta__content">
+        <h2 id="cta-title">Welcome back</h2>
+        <p>Your plan is a few answers away.</p>
+        <a class="btn btn--black" href="#assistant">Start recovery</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <a class="brand" href="#top" aria-label="Tranom home">
+        <svg class="brand__mark" aria-hidden="true"><use href="#spark"/></svg>
+        <span>Tranom</span>
+      </a>
+      <nav class="footer__links" aria-label="Footer">
+        <a href="#assistant">Recovery assistant</a>
+        <a href="#use-cases">Use cases</a>
+        <a href="#safety">Safety</a>
+        <a href="#faq">FAQ</a>
+        <a href="https://www.roblox.com/support" target="_blank" rel="noopener">Roblox Support</a>
+      </nav>
+    </div>
+    <p class="footer__legal">Tranom is not affiliated with, endorsed by, or sponsored by Roblox Corporation. Roblox is a trademark of Roblox Corporation. © 2026 Tranom.</p>
+  </footer>
+</div>
+<!--PREVIEW-END-->
+<script src="assets/js/main.js" defer></script>
+</body>
+</html>

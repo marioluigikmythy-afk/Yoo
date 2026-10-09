@@ -1,0 +1,14 @@
+{
+  "name": "tranom-renders",
+  "private": true,
+  "type": "module",
+  "description": "Three.js scenes that produce the 3D flower-field images used on the Tranom site.",
+  "scripts": {
+    "render": "node render.mjs",
+    "build": "bash build.sh"
+  },
+  "dependencies": {
+    "playwright-core": "1.64.0",
+    "three": "0.169.0"
+  }
+}
