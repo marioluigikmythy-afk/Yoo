@@ -1,0 +1,15 @@
+{
+  "name": "tranom-ad",
+  "private": true,
+  "type": "module",
+  "description": "Builds the Tranom ad: a 3D story (scam, lock-out, recovery) with phone screens, the real site, voiceover, score and sound effects.",
+  "scripts": {
+    "build": "bash build.sh"
+  },
+  "dependencies": {
+    "n8n-nodes-ttsbro": "0.1.6",
+    "playwright-core": "1.64.0",
+    "sherpa-onnx-node": "1.13.8",
+    "three": "0.169.0"
+  }
+}

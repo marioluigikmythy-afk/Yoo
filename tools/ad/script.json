@@ -1,0 +1,14 @@
+[
+  {"id": "intro",    "say": "This is Alex. Six years on his Roblox account."},
+  {"id": "dm",       "say": "Then, one message. Free Robux. Just log in to claim."},
+  {"id": "login",    "say": "So he did. Password. Two-step code."},
+  {"id": "locked",   "say": "Seconds later, his email and password were changed. He was locked out."},
+  {"id": "support",  "say": "He contacted Roblox Support, which is free. But he couldn't prove the account was his."},
+  {"id": "found",    "say": "Then he found Tranom."},
+  {"id": "form",     "say": "One short form, free to send. And notice: no password. We never ask for it."},
+  {"id": "pay",      "say": "We told him the price up front. Then we got to work."},
+  {"id": "work",     "say": "We worked out what proof Roblox needed, wrote his support request, and T one, our case agent, followed up with Roblox every day."},
+  {"id": "restored", "say": "Until Roblox verified it was his."},
+  {"id": "secure",   "say": "Then we helped him lock it down."},
+  {"id": "end",      "say": "Tranom. Recover what's yours, at tranom dot com."}
+]

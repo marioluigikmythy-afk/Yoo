@@ -84,7 +84,9 @@ assets/img/             WebP renders, icons, social image
 tools/pages/            page generator, business facts and the text of every page
 tools/render/           Three.js scenes that generate the images
 tools/video/            source for the TikTok videos (stage, voice script, music and sound effects)
+tools/ad/               source for the ad (3D character and room, phone screens, voice, score)
 marketing/tiktok/       finished TikTok videos, cover, subtitles and post copy
+marketing/ad/           finished ad, cover, subtitles and post copy
 ```
 
 ## Regenerating the images
@@ -118,6 +120,20 @@ npm run build                       # renders, voices, mixes and writes marketin
 - **Voice:** Kokoro (Apache-2.0), speaker 1 "Bella", run offline through sherpa-onnx. Nothing is sent to a speech service.
 - **Music and sound effects:** synthesized from scratch in `audio.py`, so there's nothing to license.
 - Needs Node 18+, ffmpeg, and Python 3 with numpy, scipy and Pillow. A full build took about 10 minutes on the machine used to make them. Set `SKIP_RENDERS=1` to reuse the background images already in `stage/`.
+
+## The ad
+
+`marketing/ad/tranom_ad.mp4` is a 57-second vertical ad. Alex clicks a fake "free Robux" link, types his password and 2-step code, and is locked out. Roblox Support can't verify him. He finds tranom.com, sends the free form (the ad points out that Tranom never asks for a password), is told the price up front, and pays. Tranom lists the proof Roblox needs and writes his support request, and T1 follows up every day until Roblox verifies the account. Then he locks it down. The end card carries the "Dramatization" note, the not-affiliated line and the fact that Roblox Support is free. `post-copy.md` has the scene list, a caption and posting notes.
+
+It's built from code in `tools/ad`:
+
+- `stage/char.js` and `stage/room.js`: the 3D character (face rig and posable arms) and his bedroom, in Three.js.
+- `stage/index.html` and `stage/main.js`: the timeline, every phone screen, and the real site loaded in a frame, scrolled and filled in.
+- `script.json` (narration), `timeline.py` (voice placement and captions), `audio.py` (score and sound effects).
+
+```bash
+cd tools/ad && npm install && npm run build   # about 45 minutes; writes marketing/ad
+```
 
 ## Legal
 

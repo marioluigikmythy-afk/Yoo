@@ -1,0 +1,356 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<title>Tranom ad stage</title>
+<script type="importmap">{"imports":{"three":"../node_modules/three/build/three.module.js","three/addons/":"../node_modules/three/examples/jsm/"}}</script>
+<style>
+@font-face { font-family: "PJS"; src: url("plus-jakarta-sans-latin.woff2") format("woff2"); font-weight: 200 800; }
+:root { --navy: #1d1838; --ink: #231f3a; --ink2: #5b5677; --lav: #8f86ef; --lav2: #c9c4fb; --paper: #f6f5fd; --red: #ff5a6b; --amber: #ffb547; --green: #3ccf8e; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { width: 1080px; height: 1920px; overflow: hidden; background: #000; }
+body { font-family: "PJS", system-ui, sans-serif; color: var(--ink); -webkit-font-smoothing: antialiased; }
+#frame { position: relative; width: 1080px; height: 1920px; overflow: hidden; background: #0e0b1c; }
+#gl { position: absolute; inset: 0; width: 1080px; height: 1920px; }
+.ui { position: absolute; inset: 0; display: none; overflow: hidden; }
+.abs { position: absolute; }
+svg { display: block; }
+
+/* status bar */
+.sb { position: absolute; left: 0; right: 0; top: 0; height: 110px; display: flex; align-items: center; justify-content: space-between; padding: 26px 64px 0; font-size: 36px; font-weight: 700; letter-spacing: .01em; z-index: 5; }
+.sb .ic { display: flex; gap: 14px; align-items: center; }
+.sb.light { color: #fff; } .sb.dark { color: #111; }
+
+/* ---------- DM ---------- */
+#ui-dm { background: #0f0d1a; color: #fff; }
+.dm-head { position: absolute; top: 110px; left: 0; right: 0; height: 150px; display: flex; align-items: center; gap: 26px; padding: 0 40px; border-bottom: 2px solid rgba(255,255,255,.07); }
+.dm-av { width: 96px; height: 96px; border-radius: 50%; background: linear-gradient(140deg, #ffd66b, #ff9d2e); display: grid; place-items: center; }
+.dm-name { font-size: 42px; font-weight: 700; }
+.dm-sub { font-size: 28px; color: rgba(255,255,255,.5); margin-top: 4px; }
+.dm-body { position: absolute; top: 290px; left: 0; right: 0; padding: 0 44px; display: flex; flex-direction: column; gap: 22px; }
+.chip-date { align-self: center; font-size: 26px; color: rgba(255,255,255,.45); background: rgba(255,255,255,.06); padding: 10px 22px; border-radius: 999px; margin-bottom: 8px; }
+.bub { align-self: flex-start; max-width: 800px; background: #25213b; border-radius: 40px 40px 40px 12px; padding: 30px 36px; font-size: 42px; line-height: 1.32; font-weight: 500; transform-origin: 0 100%; }
+.bub b { color: #ffd66b; }
+.linkcard { align-self: flex-start; width: 760px; border-radius: 40px; overflow: hidden; background: #25213b; transform-origin: 0 100%; }
+.linkcard .img { height: 330px; background: radial-gradient(circle at 50% 120%, #ffcf5a, #ff8a1f 60%, #b84a0c); display: grid; place-items: center; position: relative; }
+.linkcard .img .big { font-size: 120px; font-weight: 800; color: #fff; text-shadow: 0 8px 0 rgba(120,40,0,.35); letter-spacing: -.02em; }
+.linkcard .meta { padding: 26px 34px 30px; }
+.linkcard .t { font-size: 40px; font-weight: 700; }
+.linkcard .u { font-size: 30px; color: rgba(255,255,255,.55); margin-top: 6px; }
+.typing { align-self: flex-start; background: #25213b; border-radius: 40px; padding: 28px 34px; display: flex; gap: 12px; }
+.typing i { width: 16px; height: 16px; border-radius: 50%; background: rgba(255,255,255,.55); display: block; }
+.dm-input { position: absolute; left: 40px; right: 40px; bottom: 420px; height: 110px; border-radius: 999px; background: #1c1930; display: flex; align-items: center; padding: 0 44px; color: rgba(255,255,255,.35); font-size: 36px; }
+
+/* finger tap */
+.tap { position: absolute; width: 120px; height: 120px; margin: -60px 0 0 -60px; border-radius: 50%; background: rgba(255,255,255,.55); border: 6px solid rgba(255,255,255,.9); box-shadow: 0 0 0 0 rgba(255,255,255,.4); opacity: 0; z-index: 40; pointer-events: none; }
+.tap.dark { background: rgba(35,31,58,.25); border-color: rgba(35,31,58,.7); }
+
+/* ---------- fake login ---------- */
+#ui-fake { background: #fff7e6; }
+.urlbar { position: absolute; top: 110px; left: 30px; right: 30px; height: 100px; border-radius: 30px; background: #fff; box-shadow: 0 2px 0 rgba(0,0,0,.06); display: flex; align-items: center; gap: 16px; padding: 0 30px; font-size: 34px; color: #333; }
+.urlbar .warn { display: flex; align-items: center; gap: 10px; color: #d13a2f; font-weight: 700; font-size: 30px; }
+.fk-hero { position: absolute; top: 240px; left: 0; right: 0; height: 520px; background: radial-gradient(circle at 50% 110%, #ffd35e, #ff9a2a 55%, #e2560e); display: grid; place-items: center; text-align: center; color: #fff; }
+.fk-hero h1 { font-size: 92px; font-weight: 800; line-height: .95; letter-spacing: -.02em; text-shadow: 0 6px 0 rgba(130,40,0,.35); }
+.fk-hero p { font-size: 34px; font-weight: 700; margin-top: 18px; background: rgba(0,0,0,.18); display: inline-block; padding: 10px 26px; border-radius: 999px; }
+.fk-card { position: absolute; left: 60px; right: 60px; top: 700px; background: #fff; border-radius: 40px; box-shadow: 0 20px 60px rgba(150,70,0,.18); padding: 50px 50px 56px; }
+.fk-card h2 { font-size: 46px; font-weight: 800; color: #222; margin-bottom: 30px; }
+.fk-field { height: 112px; border: 4px solid #e6e0d3; border-radius: 24px; display: flex; align-items: center; padding: 0 32px; font-size: 40px; color: #222; margin-bottom: 24px; position: relative; }
+.fk-field .ph { color: #aaa; }
+.fk-field.on { border-color: #ff9a2a; }
+.caret { display: inline-block; width: 4px; height: 46px; background: #ff7a00; margin-left: 4px; vertical-align: middle; }
+.fk-btn { height: 116px; border-radius: 24px; background: #23b26b; color: #fff; font-size: 44px; font-weight: 800; display: grid; place-items: center; margin-top: 10px; }
+.code { display: flex; gap: 18px; margin: 10px 0 34px; }
+.code span { width: 128px; height: 150px; border: 4px solid #e6e0d3; border-radius: 24px; display: grid; place-items: center; font-size: 68px; font-weight: 800; color: #222; }
+.code span.on { border-color: #ff9a2a; }
+.spin { width: 64px; height: 64px; border-radius: 50%; border: 9px solid rgba(255,255,255,.35); border-top-color: #fff; }
+
+/* ---------- locked ---------- */
+#ui-locked { background: radial-gradient(circle at 50% 30%, #3a1430, #12080f 70%); color: #fff; }
+.lk-time { position: absolute; top: 200px; width: 100%; text-align: center; font-size: 210px; font-weight: 300; letter-spacing: -.03em; }
+.lk-date { position: absolute; top: 175px; width: 100%; text-align: center; font-size: 40px; font-weight: 600; color: rgba(255,255,255,.75); }
+.notif { position: absolute; left: 40px; right: 40px; border-radius: 44px; background: rgba(255,255,255,.14); backdrop-filter: blur(20px); padding: 34px 38px; display: flex; gap: 28px; align-items: flex-start; }
+.notif .ico { flex: none; width: 88px; height: 88px; border-radius: 22px; display: grid; place-items: center; }
+.notif .ttl { font-size: 36px; font-weight: 700; display: flex; justify-content: space-between; }
+.notif .ttl span { font-weight: 500; color: rgba(255,255,255,.55); font-size: 30px; }
+.notif .msg { font-size: 36px; line-height: 1.3; margin-top: 6px; color: rgba(255,255,255,.92); }
+.modal { position: absolute; left: 70px; right: 70px; top: 760px; background: #1c1220; border: 3px solid rgba(255,90,107,.5); border-radius: 48px; padding: 56px; text-align: center; box-shadow: 0 30px 120px rgba(0,0,0,.6); }
+.modal h3 { font-size: 54px; font-weight: 800; }
+.modal p { font-size: 36px; color: rgba(255,255,255,.7); margin-top: 16px; line-height: 1.35; }
+.modal .fld { margin-top: 40px; height: 110px; border-radius: 24px; border: 4px solid var(--red); display: flex; align-items: center; padding: 0 30px; font-size: 44px; letter-spacing: .2em; }
+.modal .err { color: var(--red); font-size: 34px; font-weight: 700; margin-top: 18px; text-align: left; }
+
+/* big kinetic title */
+.big { position: absolute; left: 0; right: 0; text-align: center; font-weight: 800; letter-spacing: -.03em; line-height: .92; z-index: 30; pointer-events: none; }
+.glitch { color: #fff; text-shadow: -10px 0 0 rgba(255,40,90,.85), 10px 0 0 rgba(40,220,255,.75); }
+
+/* ---------- ticket ---------- */
+#ui-ticket { background: #f2f1f6; }
+.mail-top { position: absolute; top: 110px; left: 0; right: 0; height: 130px; display: flex; align-items: center; gap: 24px; padding: 0 44px; font-size: 38px; font-weight: 700; color: #333; }
+.mail { position: absolute; left: 34px; right: 34px; top: 260px; background: #fff; border-radius: 44px; padding: 52px 52px 60px; box-shadow: 0 10px 40px rgba(30,20,60,.08); }
+.mail .from { display: flex; gap: 26px; align-items: center; }
+.mail .av { width: 100px; height: 100px; border-radius: 50%; display: grid; place-items: center; font-size: 44px; font-weight: 800; color: #fff; }
+.mail .who { font-size: 40px; font-weight: 700; }
+.mail .when { font-size: 30px; color: #8a879c; margin-top: 4px; }
+.mail .subj { font-size: 50px; font-weight: 800; margin: 44px 0 26px; line-height: 1.15; color: #1d1a2c; }
+.mail .txt { font-size: 40px; line-height: 1.45; color: #3d3a52; }
+.mark { background: linear-gradient(transparent 62%, rgba(255,90,107,.35) 62%); background-repeat: no-repeat; background-size: 0% 100%; }
+.pill { display: inline-flex; align-items: center; gap: 14px; border-radius: 999px; font-weight: 700; }
+
+/* ---------- search ---------- */
+#ui-search { background: #fff; }
+.sbox { position: absolute; top: 140px; left: 40px; right: 40px; height: 120px; border-radius: 999px; background: #f1f0f6; display: flex; align-items: center; gap: 22px; padding: 0 44px; font-size: 40px; color: #222; }
+.res { position: absolute; left: 40px; right: 40px; padding: 40px 10px; border-bottom: 2px solid #eee; }
+.res .site { display: flex; gap: 18px; align-items: center; font-size: 30px; color: #555; }
+.res .fav { width: 60px; height: 60px; border-radius: 50%; background: #f1f0f6; display: grid; place-items: center; }
+.res .h { font-size: 44px; font-weight: 700; color: #3a32b5; margin-top: 20px; line-height: 1.2; }
+.res .d { font-size: 34px; color: #555; margin-top: 12px; line-height: 1.4; }
+
+/* ---------- site ---------- */
+#ui-site { background: #f5f5f5; }
+#site-wrap { position: absolute; inset: 0; transform-origin: 50% 50%; }
+#site { border: 0; width: 390px; height: 693.4px; zoom: 2.7693; display: block; background: #f5f5f5; }
+.toast { position: absolute; left: 60px; right: 60px; top: 150px; background: var(--navy); color: #fff; border-radius: 40px; padding: 38px 44px; display: flex; gap: 28px; align-items: center; font-size: 38px; line-height: 1.3; box-shadow: 0 30px 80px rgba(20,10,60,.35); z-index: 20; }
+.ring { position: absolute; border: 8px solid #8f86ef; border-radius: 40px; box-shadow: 0 0 0 9999px rgba(20,16,40,.45), 0 0 60px rgba(143,134,239,.9); z-index: 10; opacity: 0; }
+
+/* ---------- Tranom mail + pay ---------- */
+#ui-mail { background: #f4f3fb; }
+.price-card { margin-top: 36px; border-radius: 36px; background: var(--navy); color: #fff; padding: 40px 44px; display: flex; justify-content: space-between; align-items: center; }
+.price-card .k { font-size: 34px; color: var(--lav2); font-weight: 600; }
+.price-card .v { font-size: 92px; font-weight: 800; letter-spacing: -.02em; }
+.price-card .u { font-size: 30px; color: var(--lav2); text-align: right; }
+.btn { height: 120px; border-radius: 999px; background: var(--navy); color: #fff; font-size: 42px; font-weight: 700; display: grid; place-items: center; margin-top: 36px; }
+.sheet { position: absolute; left: 0; right: 0; bottom: 0; height: 900px; background: #fff; border-radius: 60px 60px 0 0; box-shadow: 0 -20px 80px rgba(20,10,60,.25); padding: 40px 60px; z-index: 10; }
+.sheet .grab { width: 120px; height: 12px; border-radius: 6px; background: #ddd; margin: 0 auto 40px; }
+.sheet .row { display: flex; justify-content: space-between; align-items: center; font-size: 38px; padding: 30px 0; border-bottom: 2px solid #f0eff5; }
+.sheet .row b { font-weight: 700; }
+.dim { position: absolute; inset: 0; background: rgba(20,16,40,.45); z-index: 9; }
+.okc { width: 200px; height: 200px; border-radius: 50%; background: var(--green); display: grid; place-items: center; margin: 60px auto 30px; }
+
+/* ---------- work ---------- */
+#ui-work { background: #efeefa; }
+.file { position: absolute; left: 50px; right: 50px; background: #fff; border-radius: 44px; padding: 46px 50px; box-shadow: 0 20px 60px rgba(40,30,110,.12); }
+.file h4 { font-size: 30px; letter-spacing: .14em; text-transform: uppercase; color: var(--lav); font-weight: 800; }
+.file .ttl { font-size: 52px; font-weight: 800; margin: 12px 0 26px; color: var(--ink); }
+.ck { display: flex; align-items: center; gap: 24px; font-size: 40px; padding: 18px 0; color: var(--ink); }
+.ck .bx { width: 58px; height: 58px; border-radius: 18px; border: 4px solid #d8d5ee; display: grid; place-items: center; flex: none; }
+.ck.on .bx { background: var(--navy); border-color: var(--navy); }
+.lines i { display: block; height: 22px; border-radius: 11px; background: #e7e5f6; margin: 20px 0; transform-origin: 0 50%; }
+.stamp { position: absolute; right: 50px; top: 46px; font-size: 34px; font-weight: 800; color: #fff; background: var(--green); padding: 12px 26px; border-radius: 999px; }
+#work-bg { position: absolute; top: -300px; bottom: -40px; left: -40px; right: -40px; background: url("vt1.jpg") center top/cover; }
+.upd { position: absolute; left: 50px; right: 50px; background: rgba(255,255,255,.94); border-radius: 40px; padding: 34px 40px; display: flex; gap: 28px; align-items: flex-start; box-shadow: 0 20px 60px rgba(10,6,40,.35); }
+.upd .av { flex: none; width: 92px; height: 92px; border-radius: 26px; background: var(--navy); color: #fff; display: grid; place-items: center; font-size: 36px; font-weight: 800; font-feature-settings: "tnum"; }
+.upd .ttl { font-size: 34px; font-weight: 800; color: var(--lav); letter-spacing: .02em; }
+.upd .msg { font-size: 40px; line-height: 1.3; color: var(--ink); margin-top: 6px; font-weight: 600; }
+.daypill { position: absolute; left: 0; right: 0; margin: 0 auto; width: fit-content; top: 150px; background: rgba(29,24,56,.82); color: #fff; font-size: 38px; font-weight: 700; padding: 22px 40px; border-radius: 999px; display: flex; gap: 18px; align-items: center; white-space: nowrap; }
+
+/* overlays on 3D */
+.banner { position: absolute; left: 36px; right: 36px; top: 60px; border-radius: 44px; background: rgba(255,255,255,.95); padding: 34px 38px; display: flex; gap: 28px; align-items: center; box-shadow: 0 20px 60px rgba(10,6,40,.35); z-index: 25; display: none; }
+.banner .ico { width: 92px; height: 92px; border-radius: 24px; background: var(--green); display: grid; place-items: center; flex: none; }
+.banner .ttl { font-size: 34px; font-weight: 700; color: #6b6782; }
+.banner .msg { font-size: 42px; font-weight: 700; color: var(--ink); margin-top: 4px; line-height: 1.25; }
+.lockcard { position: absolute; left: 70px; right: 70px; top: 1040px; border-radius: 48px; background: rgba(255,255,255,.93); padding: 46px 52px; box-shadow: 0 30px 80px rgba(10,6,40,.35); z-index: 25; display: none; }
+.lockcard h5 { font-size: 30px; letter-spacing: .14em; text-transform: uppercase; color: var(--lav); font-weight: 800; margin-bottom: 14px; }
+
+/* ---------- end card ---------- */
+#ui-end { background: #dcdcf5; }
+#end-bg { position: absolute; inset: -60px; background: url("vhero.jpg") center/cover; }
+.end-panel { position: absolute; left: 0; right: 0; top: 230px; text-align: center; }
+.logo { display: inline-flex; align-items: center; gap: 26px; font-size: 120px; font-weight: 600; letter-spacing: -.035em; color: var(--ink); }
+.tag { font-size: 64px; font-weight: 700; color: var(--ink); margin-top: 24px; letter-spacing: -.02em; }
+.url { display: inline-block; margin-top: 44px; background: var(--navy); color: #fff; font-size: 52px; font-weight: 700; padding: 26px 56px; border-radius: 999px; }
+.prices { margin-top: 30px; font-size: 38px; font-weight: 600; color: var(--ink2); }
+.fine { position: absolute; left: 60px; right: 60px; bottom: 70px; text-align: center; font-size: 27px; line-height: 1.45; color: #2c2745; background: rgba(255,255,255,.78); border-radius: 30px; padding: 26px 34px; font-weight: 500; }
+
+/* captions */
+#cap { position: absolute; left: 70px; right: 70px; top: 1600px; display: flex; justify-content: center; z-index: 50; pointer-events: none; }
+#cap .box { background: rgba(20,16,40,.82); color: #fff; font-size: 54px; font-weight: 700; line-height: 1.18; padding: 20px 36px; border-radius: 28px; text-align: center; letter-spacing: -.01em; }
+#cap .box span { opacity: .45; } #cap .box span.on { opacity: 1; } #cap .box span.hi { color: #c9c2ff; opacity: 1; }
+.t1n { font-feature-settings: "tnum"; }
+
+#vig { position: absolute; inset: 0; pointer-events: none; z-index: 60; background: radial-gradient(ellipse at 50% 46%, transparent 55%, rgba(5,3,15,.5) 100%); }
+#grain { position: absolute; inset: 0; width: 1080px; height: 1920px; pointer-events: none; z-index: 61; mix-blend-mode: overlay; opacity: .22; }
+#flash { position: absolute; inset: 0; pointer-events: none; z-index: 62; background: #fff; opacity: 0; }
+#scan { position: absolute; inset: 0; pointer-events: none; z-index: 59; opacity: 0; background: repeating-linear-gradient(0deg, rgba(0,0,0,.25) 0 3px, transparent 3px 7px); }
+</style></head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+  <symbol id="spark" viewBox="0 0 100 100"><path d="M50 0 C54 30 70 46 100 50 C70 54 54 70 50 100 C46 70 30 54 0 50 C30 46 46 30 50 0Z"/></symbol>
+  <symbol id="check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="shield" viewBox="0 0 24 24"><path d="M12 2l8 3v6c0 5-3.4 9.3-8 11-4.6-1.7-8-6-8-11V5l8-3z" fill="currentColor"/></symbol>
+  <symbol id="gift" viewBox="0 0 24 24"><path d="M3 9h18v4H3zM5 13h14v8H5zM12 9v12M12 9c-2-4-6-4-6-1.5S9 9 12 9zm0 0c2-4 6-4 6-1.5S15 9 12 9z" fill="none" stroke="#fff" stroke-width="1.8" stroke-linejoin="round"/></symbol>
+  <symbol id="warn" viewBox="0 0 24 24"><path d="M12 3l10 18H2L12 3z" fill="currentColor"/><path d="M12 10v5M12 17.5v.5" stroke="#fff" stroke-width="2.2" stroke-linecap="round"/></symbol>
+  <symbol id="lock" viewBox="0 0 24 24"><rect x="4" y="10" width="16" height="11" rx="3" fill="currentColor"/><path d="M8 10V7a4 4 0 018 0v3" fill="none" stroke="currentColor" stroke-width="2.4"/></symbol>
+  <symbol id="search" viewBox="0 0 24 24"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.4"/><path d="M15.5 15.5L21 21" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/></symbol>
+  <symbol id="back" viewBox="0 0 24 24"><path d="M15 4l-8 8 8 8" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"/></symbol>
+  <symbol id="bars" viewBox="0 0 34 24"><rect x="0" y="16" width="6" height="8" rx="2" fill="currentColor"/><rect x="9" y="11" width="6" height="13" rx="2" fill="currentColor"/><rect x="18" y="6" width="6" height="18" rx="2" fill="currentColor"/><rect x="27" y="0" width="6" height="24" rx="2" fill="currentColor"/></symbol>
+  <symbol id="batt" viewBox="0 0 50 24"><rect x="1" y="1" width="42" height="22" rx="6" fill="none" stroke="currentColor" stroke-width="2" opacity=".5"/><rect x="5" y="5" width="30" height="14" rx="3" fill="currentColor"/><rect x="45" y="8" width="4" height="8" rx="2" fill="currentColor" opacity=".5"/></symbol>
+  <symbol id="card" viewBox="0 0 24 24"><rect x="2" y="5" width="20" height="14" rx="3" fill="currentColor"/><rect x="2" y="8.5" width="20" height="2.5" fill="#fff" opacity=".6"/></symbol>
+</svg>
+
+<div id="frame">
+  <canvas id="gl" width="1080" height="1920"></canvas>
+
+  <!-- 1. scam DM -->
+  <section class="ui" id="ui-dm">
+    <div class="sb light"><span>11:46</span><span class="ic"><svg width="34" height="24"><use href="#bars"/></svg><svg width="50" height="24"><use href="#batt"/></svg></span></div>
+    <div class="dm-head"><svg width="40" height="40" style="color:#fff;opacity:.8"><use href="#back"/></svg><div class="dm-av"><svg width="54" height="54"><use href="#gift"/></svg></div><div><div class="dm-name">RBX Rewards</div><div class="dm-sub">Not in your contacts</div></div></div>
+    <div class="dm-body">
+      <div class="chip-date">Today 11:46 PM</div>
+      <div class="bub" id="dm1">Congrats, <b>AlexBuilds</b>!</div>
+      <div class="bub" id="dm2">You've been picked for <b>10,000 FREE Robux</b>.</div>
+      <div class="linkcard" id="dm3"><div class="img"><div class="big">10,000</div></div><div class="meta"><div class="t">Claim your reward</div><div class="u">rblx-rewards.gift/claim</div></div></div>
+      <div class="bub" id="dm4">Ends at midnight. Log in to claim!</div>
+      <div class="typing" id="dmtyping"><i></i><i></i><i></i></div>
+    </div>
+    <div class="dm-input">Message…</div>
+    <div class="tap" id="dmtap"></div>
+  </section>
+
+  <!-- 2. fake login -->
+  <section class="ui" id="ui-fake">
+    <div class="sb dark"><span>11:47</span><span class="ic"><svg width="34" height="24"><use href="#bars"/></svg><svg width="50" height="24"><use href="#batt"/></svg></span></div>
+    <div class="urlbar"><span class="warn"><svg width="34" height="34"><use href="#warn"/></svg>Not secure</span><span style="opacity:.75">rblx-rewards.gift/login</span></div>
+    <div class="fk-hero"><div><h1>CLAIM<br>10,000 ROBUX</h1><p>Limited time only</p></div></div>
+    <div class="fk-card" id="fk-step1">
+      <h2>Log in to continue</h2>
+      <div class="fk-field" id="fk-user"><span class="ph">Username</span></div>
+      <div class="fk-field" id="fk-pass"><span class="ph">Password</span></div>
+      <div class="fk-btn" id="fk-login">Log in</div>
+    </div>
+    <div class="fk-card" id="fk-step2" style="opacity:0">
+      <h2>2-Step Verification</h2>
+      <p style="font-size:36px;color:#666;margin:-10px 0 24px;line-height:1.35">Enter the 6-digit code sent to your email.</p>
+      <div class="code" id="fk-code"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+      <div class="fk-btn" id="fk-claim">Claim reward</div>
+    </div>
+    <div class="tap dark" id="fktap"></div>
+  </section>
+
+  <!-- 3. locked out -->
+  <section class="ui" id="ui-locked">
+    <div class="sb light"><span></span><span class="ic"><svg width="34" height="24"><use href="#bars"/></svg><svg width="50" height="24"><use href="#batt"/></svg></span></div>
+    <div class="lk-date">Thursday, October 8</div>
+    <div class="lk-time">11:52</div>
+    <div class="notif" id="n1"><div class="ico" style="background:#ff5a6b"><svg width="54" height="54" style="color:#fff"><use href="#shield"/></svg></div><div><div class="ttl">Security alert <span>now</span></div><div class="msg">The email on your account was changed.</div></div></div>
+    <div class="notif" id="n2"><div class="ico" style="background:#ff5a6b"><svg width="54" height="54" style="color:#fff"><use href="#lock"/></svg></div><div><div class="ttl">Security alert <span>now</span></div><div class="msg">Your password was changed.</div></div></div>
+    <div class="notif" id="n3"><div class="ico" style="background:#ffb547"><svg width="54" height="54" style="color:#fff"><use href="#warn"/></svg></div><div><div class="ttl">New login <span>now</span></div><div class="msg">Your account was accessed from a new device.</div></div></div>
+    <div class="modal" id="lk-modal"><h3>You've been logged out</h3><p>Log in again to continue.</p><div class="fld">••••••••••</div><div class="err">Incorrect password.</div></div>
+    <div class="big glitch" id="lk-title" style="top:1230px;font-size:170px">LOCKED<br>OUT.</div>
+  </section>
+
+  <!-- 4. support reply -->
+  <section class="ui" id="ui-ticket">
+    <div class="sb dark"><span>9:14</span><span class="ic"><svg width="34" height="24"><use href="#bars"/></svg><svg width="50" height="24"><use href="#batt"/></svg></span></div>
+    <div class="mail-top"><svg width="40" height="40"><use href="#back"/></svg>Inbox</div>
+    <div class="mail" id="tk-mail">
+      <div class="from"><div class="av" style="background:#8a879c">S</div><div><div class="who">Support</div><div class="when">to me · 9:12 AM</div></div></div>
+      <div class="subj">Re: My account was hacked</div>
+      <div class="txt">Hi, thanks for contacting us.<br><br><span class="mark" id="tk-mark">We weren't able to verify that you own this account</span> with the information provided.</div>
+      <div style="margin-top:40px"><span class="pill" style="background:#efedf6;color:#6b6782;font-size:32px;padding:14px 26px">Ticket closed</span></div>
+    </div>
+  </section>
+
+  <!-- 5. search -->
+  <section class="ui" id="ui-search">
+    <div class="sb dark"><span>9:31</span><span class="ic"><svg width="34" height="24"><use href="#bars"/></svg><svg width="50" height="24"><use href="#batt"/></svg></span></div>
+    <div class="sbox"><svg width="44" height="44" style="color:#777"><use href="#search"/></svg><span id="sq"></span><span class="caret" id="sqc" style="background:#3a32b5"></span></div>
+    <div class="res" id="r1" style="top:300px">
+      <div class="site"><div class="fav"><svg width="34" height="34" style="fill:#1d1838"><use href="#spark"/></svg></div><div><b style="color:#222">Tranom</b><br>tranom.com</div></div>
+      <div class="h">Tranom | Roblox Account Recovery Help</div>
+      <div class="d">Independent, paid help recovering a Roblox account through official Roblox channels.</div>
+    </div>
+    <div class="res" id="r2" style="top:740px">
+      <div class="site"><div class="fav"><svg width="30" height="30" style="color:#555"><use href="#shield"/></svg></div><div><b style="color:#222">Roblox</b><br>roblox.com › support</div></div>
+      <div class="h">Contact Roblox Support</div>
+      <div class="d">Get help with your account. Free.</div>
+    </div>
+    <div class="tap dark" id="sqtap"></div>
+  </section>
+
+  <!-- 6. the real site -->
+  <section class="ui" id="ui-site">
+    <div id="site-wrap"><iframe id="site" title="tranom.com"></iframe><div class="ring" id="ring"></div></div>
+    <div class="toast" id="toast" style="opacity:0"><svg width="72" height="72" style="color:#8f86ef;flex:none"><use href="#check"/></svg><div><b>Request sent. Free.</b><br><span style="color:#c9c4fb">We'll reply within one business day.</span></div></div>
+    <div class="tap dark" id="sttap"></div>
+  </section>
+
+  <!-- 7. Tranom email + payment -->
+  <section class="ui" id="ui-mail">
+    <div class="sb dark"><span>10:05</span><span class="ic"><svg width="34" height="24"><use href="#bars"/></svg><svg width="50" height="24"><use href="#batt"/></svg></span></div>
+    <div class="mail-top"><svg width="40" height="40"><use href="#back"/></svg>Inbox</div>
+    <div class="mail" id="tm-mail">
+      <div class="from"><div class="av" style="background:#1d1838"><svg width="50" height="50" style="fill:#fff"><use href="#spark"/></svg></div><div><div class="who">Tranom</div><div class="when">to me · 10:04 AM</div></div></div>
+      <div class="subj">Your case review</div>
+      <div class="txt">Hi Alex, thanks for the details. Here's your case and the price, before you pay anything.</div>
+      <div class="price-card"><div><div class="k">Priority case</div><div class="v">$99</div></div><div class="u">one time<br>no hidden fees</div></div>
+      <div class="txt" style="font-size:34px;margin-top:28px;color:#6b6782">Cancel before we start and you get a full refund.</div>
+      <div class="btn" id="tm-pay">Agree and pay $99</div>
+    </div>
+    <div class="dim" id="tm-dim" style="opacity:0"></div>
+    <div class="sheet" id="tm-sheet">
+      <div class="grab"></div>
+      <div style="font-size:44px;font-weight:800;margin-bottom:20px">Pay Tranom Technologies LLC</div>
+      <div class="row"><span>Priority case</span><b>$99.00</b></div>
+      <div class="row"><span style="display:flex;gap:18px;align-items:center"><svg width="56" height="56" style="color:#3a32b5"><use href="#card"/></svg>Card •••• 4242</span><b style="color:#8a879c">Change</b></div>
+      <div class="btn" id="tm-paybtn" style="background:#1d1838">Pay $99.00</div>
+      <div id="tm-ok" style="opacity:0;position:absolute;inset:0;background:#fff;border-radius:60px 60px 0 0;display:grid;place-items:center"><div id="tm-okin" style="text-align:center;margin-top:-260px"><div class="okc"><svg width="120" height="120" style="color:#fff"><use href="#check"/></svg></div><div style="font-size:54px;font-weight:800">Payment complete</div><div style="font-size:36px;color:#6b6782;margin-top:14px">Receipt sent to alex@example.com</div></div></div>
+    </div>
+    <div class="tap dark" id="tmtap"></div>
+  </section>
+
+  <!-- 8. the work -->
+  <section class="ui" id="ui-work">
+    <div id="wk-a">
+      <div class="file" id="wk-proof" style="top:170px">
+        <h4>Case file · Alex</h4>
+        <div class="ttl">Proof Roblox needs</div>
+        <div class="ck" data-i="0"><div class="bx"><svg width="40" height="40" style="color:#fff"><use href="#check"/></svg></div>Original email address</div>
+        <div class="ck" data-i="1"><div class="bx"><svg width="40" height="40" style="color:#fff"><use href="#check"/></svg></div>Purchase receipts</div>
+        <div class="ck" data-i="2"><div class="bx"><svg width="40" height="40" style="color:#fff"><use href="#check"/></svg></div>When the account was made</div>
+        <div class="ck" data-i="3"><div class="bx"><svg width="40" height="40" style="color:#fff"><use href="#check"/></svg></div>Devices he played on</div>
+      </div>
+      <div class="file" id="wk-req" style="top:930px">
+        <h4>Support request</h4>
+        <div class="ttl">Written for Alex</div>
+        <div class="lines"><i></i><i></i><i></i><i style="width:60%"></i></div>
+        <div class="stamp" id="wk-stamp">Ready</div>
+      </div>
+    </div>
+    <div id="wk-b">
+      <div id="work-bg"></div>
+      <div class="daypill" id="wk-day"><svg width="40" height="40" style="fill:#c9c4fb"><use href="#spark"/></svg><span id="wk-daytxt">Every day, until it's done</span></div>
+      <div class="upd" id="u1"><div class="av t1n">T1</div><div><div class="ttl">Day 1</div><div class="msg">Checked in with Roblox. Under review.</div></div></div>
+      <div class="upd" id="u2"><div class="av t1n">T1</div><div><div class="ttl">Day 2</div><div class="msg">Roblox asked for one more receipt. Added.</div></div></div>
+      <div class="upd" id="u3"><div class="av t1n">T1</div><div><div class="ttl">Day 3</div><div class="msg">Checked in again. Still under review.</div></div></div>
+    </div>
+  </section>
+
+  <!-- overlays on the 3D shots -->
+  <div class="banner" id="bn"><div class="ico"><svg width="58" height="58" style="color:#fff"><use href="#check"/></svg></div><div><div class="ttl">Support · now</div><div class="msg">Ownership verified. Your account access is restored.</div></div></div>
+  <div class="lockcard" id="lc">
+    <h5>Locked down</h5>
+    <div class="ck on" data-i="0"><div class="bx"><svg width="40" height="40" style="color:#fff"><use href="#check"/></svg></div>New, unique password</div>
+    <div class="ck on" data-i="1"><div class="bx"><svg width="40" height="40" style="color:#fff"><use href="#check"/></svg></div>2-Step Verification on</div>
+    <div class="ck on" data-i="2"><div class="bx"><svg width="40" height="40" style="color:#fff"><use href="#check"/></svg></div>Recovery email updated</div>
+    <div class="ck on" data-i="3"><div class="bx"><svg width="40" height="40" style="color:#fff"><use href="#check"/></svg></div>Never share codes</div>
+  </div>
+
+  <!-- 9. end card -->
+  <section class="ui" id="ui-end">
+    <div id="end-bg"></div>
+    <div class="end-panel">
+      <div class="logo" id="e-logo"><svg width="110" height="110" style="fill:#1d1838"><use href="#spark"/></svg>Tranom</div>
+      <div class="tag" id="e-tag">Recover what's yours.</div>
+      <div><span class="url" id="e-url">tranom.com</span></div>
+      <div class="prices" id="e-price">Standard $49 · Priority $99 · one time</div>
+    </div>
+    <div class="fine" id="e-fine">Dramatization. Only Roblox can restore an account, so no one can guarantee recovery. Roblox Support is free. Tranom never asks for your password. Tranom Technologies LLC is not affiliated with Roblox.</div>
+  </section>
+
+  <div class="big" id="bigt" style="display:none"></div>
+  <div id="cap"></div>
+  <div id="scan"></div>
+  <div id="vig"></div>
+  <canvas id="grain" width="540" height="960"></canvas>
+  <div id="flash"></div>
+</div>
+<script type="module" src="main.js"></script>
+</body></html>
