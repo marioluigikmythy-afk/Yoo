@@ -59,7 +59,7 @@ def shell(*, title, description, path, body, base="", robots="index, follow", ho
       <span class="sr-only">Menu</span><span class="nav__bars" aria-hidden="true"></span>
     </button>
     <nav class="nav__links" id="nav-links" aria-label="Main">
-      <a href="{home}#about">About</a>
+      <a href="{base}t1.html">Meet T1</a>
       <a href="{home}#use-cases">Use cases</a>
       <a href="{home}#how">How it works</a>
       <a href="{home}#safety">Safety</a>
@@ -77,6 +77,7 @@ def shell(*, title, description, path, body, base="", robots="index, follow", ho
         <span>Tranom</span>
       </a>
       <nav class="footer__links" aria-label="Footer">
+        <a href="{base}t1.html">Meet T1</a>
         <a href="{home}#use-cases">Use cases</a>
         <a href="{home}#faq">FAQ</a>
         <a href="{base}privacy.html">Privacy Policy</a>
@@ -100,6 +101,19 @@ def shell(*, title, description, path, body, base="", robots="index, follow", ho
 </body>
 </html>
 """
+
+
+def brand_t1(html):
+    """Wrap visible "T1" text in <span class="t1n"> so it uses the footed 1 and can't read as "Tl"."""
+    import re
+    head, sep, body = html.partition("<body>")
+    if not sep:
+        return html
+    parts = re.split(r"(<[^>]+>)", body)
+    for i, part in enumerate(parts):
+        if part and not part.startswith("<"):
+            parts[i] = re.sub(r"\bT1\b", '<span class="t1n">T1</span>', part)
+    return head + sep + "".join(parts)
 
 
 def legal(kind, heading, updated, toc, content):
@@ -137,8 +151,17 @@ for kind, heading, title, desc in [
 ]:
     content = (CONTENT / f"{kind}.html").read_text()
     body = legal(kind, heading, UPDATED, toc_from(content), content)
-    (ROOT / f"{kind}.html").write_text(shell(title=title, description=desc, path=f"{kind}.html", body=body))
+    (ROOT / f"{kind}.html").write_text(brand_t1(shell(title=title, description=desc, path=f"{kind}.html", body=body)))
     print("wrote", kind + ".html")
+
+t1_body = (CONTENT / "t1.html").read_text()
+t1_page = shell(
+    title="Meet T1 | Tranom",
+    description="T1 is Tranom's own case agent. Every day, T1 and our team check in with Roblox until your case is verified and complete.",
+    path="t1.html", body=t1_body)
+t1_page = t1_page.replace('<a href="t1.html">Meet T1</a>\n      <a href="index.html#use-cases">', '<a href="t1.html" aria-current="page">Meet T1</a>\n      <a href="index.html#use-cases">', 1)
+(ROOT / "t1.html").write_text(brand_t1(t1_page))
+print("wrote t1.html")
 
 notfound = """  <main id="main">
     <section class="notfound" aria-labelledby="nf-title">

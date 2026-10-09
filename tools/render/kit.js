@@ -2,6 +2,7 @@ import * as THREE from 'three';
 import { RoundedBoxGeometry } from 'three/addons/geometries/RoundedBoxGeometry.js';
 import { mergeGeometries } from 'three/addons/utils/BufferGeometryUtils.js';
 import { SimplexNoise } from 'three/addons/math/SimplexNoise.js';
+import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
 
 export { THREE };
 
@@ -41,11 +42,13 @@ export function skyTexture(stops, h = 1024) {
   return t;
 }
 
-export function makeEnv(renderer, { warm = 0 } = {}) {
+export function makeEnv(renderer, { warm = 0, dusk = false } = {}) {
   const s = new THREE.Scene();
   const geo = new THREE.SphereGeometry(50, 96, 48);
   const pos = geo.attributes.position;
-  const stops = [[1, '#ffffff'], [0.35, '#f3f1ff'], [0.05, '#dcd7fc'], [-0.08, '#b3a9ef'], [-0.22, '#7a6bd0'], [-0.45, '#3b2c8a'], [-1, '#17103c']];
+  const stops = dusk
+    ? [[1, '#3a3270'], [0.4, '#4a3f8c'], [0.1, '#8576dc'], [0.0, '#b9adf7'], [-0.1, '#5a4bb0'], [-0.4, '#1f1650'], [-1, '#0c0822']]
+    : [[1, '#ffffff'], [0.35, '#f3f1ff'], [0.05, '#dcd7fc'], [-0.08, '#b3a9ef'], [-0.22, '#7a6bd0'], [-0.45, '#3b2c8a'], [-1, '#17103c']];
   const colors = [];
   for (let i = 0; i < pos.count; i++) {
     const c = lerpStops(stops, pos.getY(i) / 50);
@@ -57,8 +60,9 @@ export function makeEnv(renderer, { warm = 0 } = {}) {
     const m = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.MeshBasicMaterial({ color: col(tint).multiplyScalar(k), side: THREE.DoubleSide }));
     m.position.set(...p); m.lookAt(0, 0, 0); s.add(m);
   };
-  box(34, 14, [-22, 28, 18], 4.0);
-  box(40, 16, [0, 12, 42], 1.6, '#f4f2ff');
+  const k = dusk ? 0.45 : 1;
+  box(34, 14, [-22, 28, 18], 4.0 * k, dusk ? '#e2dcff' : '#ffffff');
+  box(40, 16, [0, 12, 42], 1.6 * k, '#f4f2ff');
   box(22, 10, [26, 16, 16], 1.8, warm ? '#fff1dc' : '#ffffff');
   box(50, 5, [0, 7, -42], 1.4, '#e9e4ff');
   box(12, 30, [40, 10, -10], 1.2);
@@ -632,5 +636,84 @@ export function addLights(scene, { sun = [-6, 9, -4], sunK = 3.1, hemiK = 0.6, t
   d.shadow.bias = -0.0004; d.shadow.normalBias = 0.02; d.shadow.radius = 6; d.shadow.blurSamples = 16;
   scene.add(d, d.target);
   const f = new THREE.DirectionalLight('#cfd0ff', fill); f.position.set(5, 4, 8); scene.add(f);
+  return d;
+}
+
+/* ---------- T1, the support agent ---------- */
+
+export function makeBot({ shell = M.chrome('#dedaff', 0.13), accent = M.satin('#2c2745', 0.32), glowColor = '#f1edff', glowK = 3.2, tipGlow = true, font = null } = {}) {
+  const g = new THREE.Group();
+  const glow = new THREE.MeshBasicMaterial({ color: col(glowColor).multiplyScalar(glowK), toneMapped: false });
+  const add = (geo, mat, x, y, z) => { const m = new THREE.Mesh(geo, mat); m.position.set(x, y, z); g.add(m); return m; };
+
+  // torso and neck (mostly hidden in flowers)
+  add(new RoundedBoxGeometry(1.8, 1.1, 1.35, 8, 0.36), shell, 0, 0.05, 0);
+  add(new THREE.CylinderGeometry(0.34, 0.4, 0.3, 40), accent, 0, 0.66, 0);
+  // head
+  const head = add(new RoundedBoxGeometry(2.3, 2.0, 1.9, 12, 0.42), shell, 0, 1.6, 0);
+  head.name = 'head';
+  // visor
+  const visorMat = new THREE.MeshPhysicalMaterial({ color: '#120d2a', roughness: 0.08, metalness: 0.3, clearcoat: 1, clearcoatRoughness: 0.03, envMapIntensity: 1.4 });
+  add(new RoundedBoxGeometry(1.72, 0.86, 0.22, 10, 0.2), visorMat, 0, 1.45, 0.86);
+  // eyes
+  const eye = new THREE.CapsuleGeometry(0.1, 0.18, 8, 20);
+  add(eye, glow, -0.34, 1.47, 0.985);
+  add(eye, glow, 0.34, 1.47, 0.985);
+  // forehead "T1"
+  if (font) {
+    const tg = new TextGeometry('T1', { font, size: 0.25, depth: 0.05, curveSegments: 10, bevelEnabled: true, bevelThickness: 0.012, bevelSize: 0.008, bevelSegments: 3 });
+    tg.computeBoundingBox(); tg.center();
+    add(tg, accent, 0, 2.07, 0.95);
+  }
+  // headset: ear cups, band and microphone
+  const cupGeo = new THREE.CylinderGeometry(0.44, 0.44, 0.26, 48); cupGeo.rotateZ(Math.PI / 2);
+  const ringGeo = new THREE.TorusGeometry(0.44, 0.05, 16, 64); ringGeo.rotateY(Math.PI / 2);
+  for (const sx of [-1, 1]) {
+    add(cupGeo, accent, sx * 1.24, 1.62, 0);
+    add(ringGeo, shell, sx * 1.37, 1.62, 0);
+    const pad = new THREE.Mesh(new THREE.CircleGeometry(0.26, 40), glow); pad.position.set(sx * 1.38, 1.62, 0); pad.rotation.y = sx * Math.PI / 2; pad.scale.setScalar(0.55); g.add(pad);
+  }
+  const band = add(new THREE.TorusGeometry(1.24, 0.08, 20, 96, Math.PI), accent, 0, 1.62, 0);
+  band.scale.y = 1.02;
+  const micCurve = new THREE.CatmullRomCurve3([
+    new THREE.Vector3(1.36, 1.5, 0.1), new THREE.Vector3(1.32, 1.05, 0.55), new THREE.Vector3(1.0, 0.86, 1.0), new THREE.Vector3(0.52, 0.86, 1.12),
+  ]);
+  g.add(new THREE.Mesh(new THREE.TubeGeometry(micCurve, 60, 0.05, 14), accent));
+  add(new THREE.SphereGeometry(0.11, 24, 16), accent, 0.5, 0.86, 1.13);
+  // antenna with a glowing spark
+  add(new THREE.CylinderGeometry(0.04, 0.05, 0.42, 16), accent, 0, 2.78, 0);
+  const tip = new THREE.Mesh(new THREE.ExtrudeGeometry(sparkShape(0.2), { depth: 0.05, bevelEnabled: true, bevelSize: 0.02, bevelThickness: 0.02, bevelSegments: 3 }), tipGlow ? glow : accent);
+  tip.geometry.center(); tip.position.set(0, 3.08, 0); g.add(tip);
+
+  g.traverse((o) => { if (o.isMesh && o.material !== glow) { o.castShadow = true; o.receiveShadow = true; } });
+  return g;
+}
+
+export function addFireflies(scene, field, { n = 70, x0 = -7, x1 = 7, z0 = -8, z1 = 4, seed = 5, color = '#fff2cc', k = 3 } = {}) {
+  const R = rng(seed);
+  const mat = new THREE.MeshBasicMaterial({ color: col(color).multiplyScalar(k), toneMapped: false });
+  const im = new THREE.InstancedMesh(new THREE.SphereGeometry(1, 10, 8), mat, n);
+  const m = new THREE.Matrix4();
+  for (let i = 0; i < n; i++) {
+    const x = x0 + R() * (x1 - x0), z = z0 + R() * (z1 - z0);
+    const y = field.surf(x, z) + 0.25 + R() * 1.4;
+    const s = 0.009 + R() * 0.012;
+    m.compose(new THREE.Vector3(x, y, z), new THREE.Quaternion(), new THREE.Vector3(s, s, s));
+    im.setMatrixAt(i, m);
+  }
+  im.frustumCulled = false;
+  scene.add(im);
+  return im;
+}
+
+export function addDuskLights(scene, { moon = [-6, 7, -8], target = [0, 0, 0], shadowBox = 9 } = {}) {
+  scene.add(new THREE.HemisphereLight('#9d92ec', '#120c2a', 0.42));
+  const d = new THREE.DirectionalLight('#dcd6ff', 2.3);
+  d.position.set(...moon); d.target.position.set(...target);
+  d.castShadow = true; d.shadow.mapSize.set(4096, 4096);
+  const c = d.shadow.camera; c.left = -shadowBox; c.right = shadowBox; c.top = shadowBox; c.bottom = -shadowBox; c.near = 0.5; c.far = 60;
+  d.shadow.bias = -0.0004; d.shadow.normalBias = 0.02; d.shadow.radius = 6; d.shadow.blurSamples = 16;
+  scene.add(d, d.target);
+  const f = new THREE.DirectionalLight('#9a8ff0', 0.9); f.position.set(5, 4, 9); scene.add(f);
   return d;
 }

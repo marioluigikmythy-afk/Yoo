@@ -1,9 +1,9 @@
-import { THREE, rng, skyTexture, makeEnv, M, makeField, makeKey, makePadlock, makeShield, makeBrick, makeEchinacea, makePhone, phoneScreen, makeEnvelope, makeAvatar, makeSpark, addLights } from './kit.js';
+import { THREE, rng, skyTexture, makeEnv, M, makeField, makeBot, addFireflies, addDuskLights, makeKey, makePadlock, makeShield, makeBrick, makeEchinacea, makePhone, phoneScreen, makeEnvelope, makeAvatar, makeSpark, addLights } from './kit.js';
 
 const HERO_SKY = [[0, '#f3f2fc'], [0.25, '#e8e8f9'], [0.45, '#dadcf6'], [0.62, '#cdcff2'], [0.8, '#c0c1ee'], [1, '#b5b5ea']];
 const CARD_SKY = [[0, '#ffffff'], [0.45, '#f6f5fd'], [0.75, '#e4e3f8'], [1, '#d3d2f3']];
 
-function base(renderer, w, h, { fov = 28, pos, look, sky = HERO_SKY, fog = ['#c9c9f0', 14, 46], env = {} }) {
+function base(renderer, w, h, { fov = 28, pos, look, sky = HERO_SKY, fog = ['#c9c9f0', 14, 46], env = {} } = {}) {
   const scene = new THREE.Scene();
   scene.background = skyTexture(sky);
   scene.environment = makeEnv(renderer, env);
@@ -126,3 +126,39 @@ export const scenes = {
   },
 };
 
+
+scenes.t1hero = (renderer, w, h) => {
+  const { scene, camera } = base(renderer, w, h, {
+    fov: 24, pos: [0, 2.1, 14], look: [0, 1.75, 0],
+    sky: [[0, '#2c2745'], [0.35, '#342d5c'], [0.6, '#4a3f8c'], [0.82, '#6f61c4'], [1, '#8b7dda']],
+    fog: ['#5b4ea8', 13, 42], env: { dusk: true },
+  });
+  const field = makeField(scene, camera, {
+    seed: 81, x0: -16, x1: 16, z0: -34, z1: 14, density: 1300, refDist: 13, flowerSize: [0.02, 0.04], grassDensity: 3.2,
+    mounds: [[3.0, 1.4, 4.2, 0.4], [-6, -5, 6, 0.6], [8, -7, 6, 0.6]], hillAmp: 0.6, bushDensity: 0.45, bushR: [0.6, 1.7], bushH: [0.4, 0.7], grassMinDist: 7,
+  });
+  const bot = makeBot({ font: window.__font, glowK: 1.7 });
+  bot.scale.setScalar(0.92);
+  bot.position.set(3.0, field.surf(3.0, 1.4) + 0.15, 1.4);
+  bot.rotation.set(0.02, -0.4, 0.03);
+  scene.add(bot);
+  const eyeLight = new THREE.PointLight('#cfc6ff', 0.7, 3.5, 2); eyeLight.position.set(2.6, bot.position.y + 1.2, 2.6); scene.add(eyeLight);
+  addFireflies(scene, field, { n: 34, x0: -8, x1: 8, z0: -9, z1: 4, k: 1.6 });
+  addDuskLights(scene, { moon: [-7, 7, -7] });
+  return { scene, camera, dof: { focus: 12.3, aperture: 0.0016, maxblur: 0.006 }, bloom: { strength: 0.42, radius: 0.5, threshold: 0.97 } };
+};
+
+scenes.t1card = (renderer, w, h) => {
+  const { scene, camera } = base(renderer, w, h, { fov: 15, pos: [0, 2.0, 19], look: [0, 1.15, 0], sky: CARD_SKY, fog: ['#e1dff7', 17, 40] });
+  const field = makeField(scene, camera, {
+    seed: 91, x0: -9, x1: 9, z0: -18, z1: 20, density: 700, refDist: 19, flowerSize: [0.024, 0.046],
+    mounds: [[0, 0, 3.2, 0.35]], hillAmp: 0.45, bushDensity: 0.5, bushR: [0.5, 1.4], bushH: [0.4, 0.7], grassDensity: 1.6, grassMinDist: 11,
+  });
+  const bot = makeBot({ font: window.__font, glowK: 1.6, tipGlow: false });
+  bot.scale.setScalar(0.62);
+  bot.position.set(0, 0.38, 0);
+  bot.rotation.set(0, -0.32, 0.02);
+  scene.add(bot);
+  addLights(scene, { sun: [-6, 8, 7], target: [0, 0, 0], shadowBox: 6 });
+  return { scene, camera, dof: { focus: 19, aperture: 0.0016, maxblur: 0.006 } };
+};

@@ -1,0 +1,176 @@
+  <main id="main" class="t1">
+    <section class="t1-hero" aria-labelledby="t1-title">
+      <img class="t1-hero__img"
+           src="assets/img/t1-hero-1600.webp"
+           srcset="assets/img/t1-hero-800.webp 800w, assets/img/t1-hero-1200.webp 1200w, assets/img/t1-hero-1600.webp 1600w, assets/img/t1-hero-2400.webp 2400w"
+           sizes="(max-width: 620px) 860px, (max-width: 1344px) 100vw, 1280px"
+           width="2400" height="1200" fetchpriority="high" decoding="async"
+           alt="T1, a friendly chrome agent wearing a support headset, glowing softly in a lavender flower field at dusk">
+      <div class="t1-hero__content">
+        <p class="t1-status"><span class="t1-status__dot" aria-hidden="true"></span>On duty every day</p>
+        <h1 id="t1-title">Meet T1, the agent that sees your case through</h1>
+        <p>T1 is our own case agent. Every day, T1 and our team check in with Roblox about your case: is it verified, is it complete, or is something still missing?</p>
+        <a class="btn btn--light" href="index.html#start">Start recovery</a>
+      </div>
+    </section>
+
+    <section class="t1-section" aria-labelledby="loop-title">
+      <div class="t1-head">
+        <div>
+          <p class="eyebrow">How T1 works</p>
+          <h2 id="loop-title">One check-in a day, until it's done</h2>
+        </div>
+        <p>Roblox Support handles a lot of requests. T1 makes sure yours keeps moving, with a steady daily follow-up instead of waiting and hoping.</p>
+      </div>
+      <ol class="t1-loop">
+        <li>
+          <span class="t1-loop__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="6.5"/><path d="m16 16 4.5 4.5"/></svg></span>
+          <span class="t1-loop__n" aria-hidden="true">01</span>
+          <h3>Review</h3>
+          <p>T1 looks at where your case stands and what Roblox said last.</p>
+        </li>
+        <li>
+          <span class="t1-loop__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M20.5 3.5 10 14"/><path d="m20.5 3.5-6.5 17-4-6.5-6.5-4Z"/></svg></span>
+          <span class="t1-loop__n" aria-hidden="true">02</span>
+          <h3>Follow up</h3>
+          <p>T1 and our agents send Roblox a normal, everyday follow-up about your case.</p>
+        </li>
+        <li>
+          <span class="t1-loop__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 3 4.5 6v5.5c0 4.6 3.1 8.2 7.5 9.5 4.4-1.3 7.5-4.9 7.5-9.5V6Z"/><path d="m9 12 2.2 2.2L15.5 10"/></svg></span>
+          <span class="t1-loop__n" aria-hidden="true">03</span>
+          <h3>Check</h3>
+          <p>Is the case verified and complete, or is something still missing?</p>
+        </li>
+        <li>
+          <span class="t1-loop__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3.5" y="5.5" width="17" height="13" rx="2.5"/><path d="m4.5 7 7.5 6 7.5-6"/></svg></span>
+          <span class="t1-loop__n" aria-hidden="true">04</span>
+          <h3>Update you</h3>
+          <p>If something's missing, we tell you exactly what and how to get it. When it's done, you hear first.</p>
+        </li>
+      </ol>
+      <p class="t1-repeat"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 4v4h4"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 20v-4h-4"/></svg>Repeats every day until your case is verified and complete</p>
+    </section>
+
+    <section class="t1-section t1-case" aria-labelledby="case-title">
+      <div class="t1-case__intro">
+        <p class="eyebrow">Example case</p>
+        <h2 id="case-title">What a week with T1 looks like</h2>
+        <p>Every case moves at Roblox's pace. This example shows the kind of updates T1 tracks, one day at a time.</p>
+      </div>
+      <figure class="case-log" aria-labelledby="case-log-caption">
+        <div class="case-log__head">
+          <div class="case-log__who">
+            <span class="case-log__avatar" aria-hidden="true"><svg><use href="#spark"/></svg></span>
+            <div>
+              <p class="case-log__id">Case TR-2041</p>
+              <p class="case-log__type">Hacked account</p>
+            </div>
+          </div>
+          <span class="tag tag--ok">Completed</span>
+        </div>
+        <ol class="case-log__list">
+          <li><span class="case-log__day">Day 1</span><p><strong>Request sent to Roblox Support</strong> with proof of ownership.</p><span class="tag tag--sent">Sent</span></li>
+          <li><span class="case-log__day">Day 2</span><p><strong>Daily follow-up.</strong> Roblox confirmed the case is in review.</p><span class="tag tag--wait">In review</span></li>
+          <li><span class="case-log__day">Day 3</span><p><strong>Roblox asked for a purchase receipt.</strong> We emailed you how to find it.</p><span class="tag tag--missing">Missing info</span></li>
+          <li><span class="case-log__day">Day 4</span><p><strong>Receipt added</strong> to the daily follow-up.</p><span class="tag tag--sent">Sent</span></li>
+          <li><span class="case-log__day">Day 5</span><p><strong>Roblox verified ownership</strong> of the account.</p><span class="tag tag--ok">Verified</span></li>
+          <li><span class="case-log__day">Day 6</span><p><strong>Access restored by Roblox.</strong> Security checklist done together.</p><span class="tag tag--ok">Completed</span></li>
+        </ol>
+        <figcaption class="case-log__note" id="case-log-caption">Example for illustration. Real cases take as long as Roblox needs.</figcaption>
+      </figure>
+    </section>
+
+    <section class="t1-section" aria-labelledby="rules-title">
+      <div class="t1-head">
+        <div>
+          <p class="eyebrow">How T1 talks to Roblox</p>
+          <h2 id="rules-title">Everyday messages, never special ones</h2>
+        </div>
+        <p>T1 doesn't rely on special messages, shortcuts or loopholes. It follows up the way a careful person would, once a day.</p>
+      </div>
+      <div class="t1-rules">
+        <div class="t1-rule t1-rule--do">
+          <h3>T1 always</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Sends one ordinary follow-up a day for each open case</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Uses Roblox's normal support channels</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Works alongside our human agents</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12.5 4.2 4.2L19 7"/></svg>Tells you as soon as something is missing</li>
+          </ul>
+        </div>
+        <div class="t1-rule t1-rule--dont">
+          <h3>T1 never</h3>
+          <ul>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg>Sends special, mass or spam messages</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg>Uses tricks, exploits or loopholes</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg>Asks for your password, codes or cookies</li>
+            <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 7l10 10M17 7 7 17"/></svg>Promises an outcome only Roblox can decide</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="t1-section t1-built" aria-labelledby="built-title">
+      <div class="t1-built__media">
+        <img src="assets/img/t1-card-900.webp"
+             srcset="assets/img/t1-card-600.webp 600w, assets/img/t1-card-900.webp 900w, assets/img/t1-card-1200.webp 1200w"
+             sizes="(max-width: 1080px) calc(100vw - 32px), 640px"
+             width="1200" height="900" loading="lazy" decoding="async"
+             alt="T1 with its headset and glowing visor, rising out of purple flowers">
+      </div>
+      <div class="t1-built__text">
+        <p class="eyebrow">Under the hood</p>
+        <h2 id="built-title">Built by our team. Run on trusted processors.</h2>
+        <p>We built T1 ourselves, around how Roblox recovery actually works. It runs on third-party processors: established providers that host and run T1 for us under contract.</p>
+        <ul class="t1-facts">
+          <li><h3>Made in-house</h3><p>Designed and maintained by the Tranom team.</p></li>
+          <li><h3>Run by third-party processors</h3><p>They host T1 under contract and may only use your information to run it.</p></li>
+          <li><h3>People in the loop</h3><p>Our agents work with T1 on every case and step in whenever a reply needs a person.</p></li>
+        </ul>
+        <a class="link-arrow" href="privacy.html#sharing"><span class="link-arrow__icon"><svg aria-hidden="true" focusable="false" viewBox="0 0 24 24"><path d="M5 12h13m-5-6 6 6-6 6" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></span>How we handle your data</a>
+      </div>
+    </section>
+
+    <section class="faq" aria-labelledby="t1-faq-title">
+      <h2 id="t1-faq-title">About T1</h2>
+      <div class="faq__list">
+        <details>
+          <summary>Is T1 a person?</summary>
+          <p>No. T1 is software our team built to follow up on cases. Our human agents work with T1 and step in whenever a case needs a person.</p>
+        </details>
+        <details>
+          <summary>How often does T1 contact Roblox?</summary>
+          <p>Once a day for each open case, with an everyday follow-up message, until the case is verified and complete.</p>
+        </details>
+        <details>
+          <summary>Does T1 send special or automated tricks?</summary>
+          <p>No. T1 doesn't use special messages, shortcuts or loopholes. It sends the same kind of everyday follow-up a careful person would.</p>
+        </details>
+        <details>
+          <summary>Does T1 need my password?</summary>
+          <p>Never. T1 doesn't sign in to your account and never asks for passwords, verification codes or browser cookies.</p>
+        </details>
+        <details>
+          <summary>Who runs T1?</summary>
+          <p>Tranom built T1. It runs on third-party processors that host it under contract and may only use your information to run T1. Our <a href="privacy.html">Privacy Policy</a> has the details.</p>
+        </details>
+        <details>
+          <summary>What happens if something is missing?</summary>
+          <p>We email you what Roblox needs and how to get it. Once you send it, T1 includes it in the next daily follow-up.</p>
+        </details>
+      </div>
+    </section>
+
+    <section class="cta" aria-labelledby="t1-cta-title">
+      <img class="cta__img" src="assets/img/welcome-1600.webp"
+           srcset="assets/img/welcome-800.webp 800w, assets/img/welcome-1200.webp 1200w, assets/img/welcome-1600.webp 1600w, assets/img/welcome-2400.webp 2400w"
+           sizes="(max-width: 620px) 923px, (max-width: 1344px) 100vw, 1280px"
+           width="2400" height="1040" loading="lazy" decoding="async"
+           alt="A friendly blocky character waving from a field of lavender flowers">
+      <div class="cta__content">
+        <h2 id="t1-cta-title">Let T1 follow up for you</h2>
+        <p>Your recovery starts with one short form.</p>
+        <a class="btn btn--black" href="index.html#start">Start recovery</a>
+      </div>
+    </section>
+  </main>

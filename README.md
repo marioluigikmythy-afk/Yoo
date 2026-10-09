@@ -16,7 +16,7 @@ Fill these in before the site goes live:
 | **Governing law.** The Terms use the State of Washington, based on the Spokane address. Change it if Tranom Technologies LLC is registered in another state. | `tools/pages/content/terms.html` |
 | **Policy review.** The Privacy Policy and Terms are a starting point, not legal advice. Have them checked, especially the 90-day data retention, the refund rules, and the statement that a person reviews AI-assisted work. | same files |
 
-After editing anything in `tools/pages/`, rebuild the pages:
+The Privacy Policy, Terms, T1 page and 404 page are generated. After editing anything in `tools/pages/`, rebuild them:
 
 ```bash
 python3 tools/pages/build_pages.py
@@ -25,6 +25,7 @@ python3 tools/pages/build_pages.py
 ## What's on the site
 
 - `index.html`: hero, features, use cases, how it works, the **Start recovery** form, safety, FAQ and a closing call to action. Every button leads to the same form.
+- `t1.html`: **Meet T1**, the page about Tranom's case agent. It covers T1's daily check-in loop with Roblox, an example case log, what T1 always and never does, and how T1 is built and run on third-party processors. The home page links to it from the menu and from a teaser after "How it works".
 - `privacy.html` and `terms.html`: Privacy Policy and Terms and Conditions.
 - `404.html`: custom "page not found" page. Most static hosts serve it automatically.
 - Cookie consent banner on every page, with equal Accept and Reject buttons and a "Cookie settings" link in the footer.
@@ -67,12 +68,12 @@ It deploys as-is to Netlify, Cloudflare Pages, GitHub Pages, Vercel or any stati
 ## Project layout
 
 ```
-index.html, privacy.html, terms.html, 404.html
+index.html, t1.html, privacy.html, terms.html, 404.html
 assets/css/styles.css   design tokens and all styles
 assets/js/main.js       mobile menu, cookie consent, form validation and spam checks
 assets/fonts/           Plus Jakarta Sans (self-hosted)
 assets/img/             WebP renders, icons, social image
-tools/pages/            generator and text for the Privacy, Terms and 404 pages
+tools/pages/            generator and text for the T1, Privacy, Terms and 404 pages
 tools/render/           Three.js scenes that generate the images
 ```
 

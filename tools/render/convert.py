@@ -17,6 +17,8 @@ JOBS = {
     'password': ('case-password', [600, 900, 1200], 4 / 3),
     'twostep': ('case-2sv', [600, 900, 1200], 4 / 3),
     'appeal': ('case-appeal', [600, 900, 1200], 4 / 3),
+    't1hero': ('t1-hero', [800, 1200, 1600, 2400], 2.0),
+    't1card': ('t1-card', [600, 900, 1200], 4 / 3),
 }
 QUALITY = 76
 
