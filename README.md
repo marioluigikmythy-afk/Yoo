@@ -25,7 +25,7 @@ python3 tools/pages/build_pages.py
 ## What's on the site
 
 - `index.html`: hero, features, use cases, how it works, the **Start recovery** form, safety, FAQ and a closing call to action. Every button leads to the same form.
-- `t1.html`: **Meet T1**, the page about Tranom's case agent. It covers T1's daily check-in loop with Roblox, an example case log, what T1 always and never does, and how T1 is built and run on third-party processors. The home page links to it from the menu and from a teaser after "How it works".
+- `t1.html`: **Meet T1**, the page about Tranom's case agent. It covers T1's daily check-in loop with Roblox, what T1 always and never does, and how T1 is built and run on third-party processors. The home page links to it from the menu and from a teaser after "How it works".
 - `privacy.html` and `terms.html`: Privacy Policy and Terms and Conditions.
 - `404.html`: custom "page not found" page. Most static hosts serve it automatically.
 - Cookie consent banner on every page, with equal Accept and Reject buttons and a "Cookie settings" link in the footer.

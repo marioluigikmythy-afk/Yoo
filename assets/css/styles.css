@@ -460,7 +460,7 @@ section[id], [id="start"] { scroll-margin-top: 16px; }
 
 .t1-section { padding-block: var(--section) 0; }
 .t1-head { display: grid; grid-template-columns: 1.3fr 1fr; gap: 20px 56px; align-items: end; margin-bottom: 36px; }
-.t1-head h2, .t1-case h2, .t1-built h2 { font-size: var(--fs-h2); }
+.t1-head h2, .t1-built h2 { font-size: var(--fs-h2); }
 .t1-head > p { font-size: var(--fs-small); max-width: 42ch; }
 
 .t1-loop { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
@@ -487,32 +487,6 @@ section[id], [id="start"] { scroll-margin-top: 16px; }
 }
 .t1-repeat svg { width: 20px; height: 20px; flex: none; animation: t1-spin 8s linear infinite; }
 @keyframes t1-spin { to { transform: rotate(360deg); } }
-
-.t1-case { display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr); gap: 32px 56px; align-items: center; }
-.t1-case__intro { display: grid; gap: 14px; align-content: start; }
-.t1-case__intro .eyebrow { margin: 0; }
-.t1-case__intro > p:last-child { max-width: 38ch; }
-.case-log {
-  margin: 0; background: var(--surface); border-radius: var(--radius-lg); padding: clamp(20px, 3vw, 32px);
-  box-shadow: 0 40px 70px -48px rgba(37, 34, 61, .45);
-}
-.case-log__head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; padding-bottom: 18px; border-bottom: 1px solid var(--line); }
-.case-log__who { display: flex; align-items: center; gap: 12px; }
-.case-log__avatar { width: 42px; height: 42px; border-radius: 13px; background: var(--navy); display: grid; place-items: center; }
-.case-log__avatar svg { width: 20px; height: 20px; fill: var(--on-navy); }
-.case-log__id { color: var(--ink); font-weight: 600; font-size: 0.95rem; letter-spacing: -0.01em; }
-.case-log__type { font-size: var(--fs-xs); color: var(--muted); }
-.case-log__list { list-style: none; margin: 0; padding: 0; }
-.case-log__list li { display: grid; grid-template-columns: 56px minmax(0, 1fr) auto; gap: 14px; align-items: baseline; padding: 15px 0; border-bottom: 1px solid var(--line); }
-.case-log__day { font-size: var(--fs-xs); color: var(--muted); font-variant-numeric: tabular-nums; }
-.case-log__list p { font-size: 0.9rem; line-height: 1.45; }
-.case-log__list strong { color: var(--ink); font-weight: 600; }
-.case-log__note { font-size: var(--fs-xs); color: var(--muted); margin-top: 14px; }
-.tag { display: inline-flex; align-items: center; padding: 5px 10px; border-radius: 999px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.01em; white-space: nowrap; }
-.tag--sent { background: #ecebfb; color: #4a3fb0; }
-.tag--wait { background: #eeeef3; color: var(--ink-2); }
-.tag--missing { background: #fff1dc; color: #8a4b00; }
-.tag--ok { background: #e3f5eb; color: #1d6a45; }
 
 .t1-rules { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .t1-rule { border-radius: var(--radius-lg); padding: clamp(24px, 3.4vw, 40px); display: grid; gap: 20px; align-content: start; }
@@ -588,7 +562,7 @@ section[id], [id="start"] { scroll-margin-top: 16px; }
   .cases-strip__list { justify-content: flex-start; }
   .start { grid-template-columns: 1fr; }
   .start__img { display: none; }
-  .t1-head, .t1-case, .t1-built { grid-template-columns: 1fr; }
+  .t1-head, .t1-built { grid-template-columns: 1fr; }
   .t1-loop { grid-template-columns: 1fr 1fr; }
   .t1-loop li:nth-child(3)::before, .t1-loop li:nth-child(3)::after { display: none; }
   .safety, .faq { grid-template-columns: 1fr; }
@@ -665,8 +639,6 @@ section[id], [id="start"] { scroll-margin-top: 16px; }
   .t1-loop li + li::after, .t1-loop li:nth-child(3)::after { display: block; left: calc(50% - 6px); top: -16px; transform: rotate(90deg); }
   .t1-repeat { border-radius: var(--radius-md); }
   .t1-rules { grid-template-columns: 1fr; }
-  .case-log__list li { grid-template-columns: 48px minmax(0, 1fr); }
-  .case-log__list .tag { grid-column: 2; justify-self: start; }
   .notfound img { top: auto; height: min(110vw, 440px); object-position: 90% 100%; -webkit-mask-image: linear-gradient(to bottom, transparent, #000 22%); mask-image: linear-gradient(to bottom, transparent, #000 22%); }
 }
 
