@@ -10,26 +10,34 @@ Fill these in before the site goes live:
 
 | What | Where |
 | --- | --- |
-| **Form endpoint.** The "Start recovery" form needs a service to receive submissions. Create a form on [Formspree](https://formspree.io) (or a similar service that accepts `POST` requests) and paste its URL into `data-endpoint=""` on `#start-form`. Until then the form tells visitors to email you instead. | `index.html` |
-| **Domain.** Every absolute URL uses `https://tranom.com`. Replace it if your domain is different. | `index.html`, `tools/pages/build_pages.py`, `sitemap.xml`, `robots.txt` |
-| **Support email.** `support@tranom.com` is used throughout. | `index.html`, `assets/js/main.js`, `tools/pages/build_pages.py`, `tools/pages/content/*.html` |
+| **Form endpoint.** The "Start recovery" form needs a service to receive submissions. Create a form on [Formspree](https://formspree.io) (or a similar service that accepts `POST` requests) and paste its URL into `data-endpoint=""` on `#start-form`. Until then the form tells visitors to email you instead. | `tools/pages/content/index.html` |
+| **Domain.** Every absolute URL uses `https://tranom.com`. Replace it if your domain is different. | `tools/pages/build_pages.py` (`SITE`), `sitemap.xml`, `robots.txt` |
 | **Governing law.** The Terms use the State of Washington, based on the Spokane address. Change it if Tranom Technologies LLC is registered in another state. | `tools/pages/content/terms.html` |
-| **Policy review.** The Privacy Policy and Terms are a starting point, not legal advice. Have them checked, especially the 90-day data retention, the refund rules, and the statement that a person reviews AI-assisted work. | same files |
+| **Policy review.** The Privacy Policy and Terms are a starting point, not legal advice. Have them checked, especially data retention and the refund rules. | `tools/pages/content/privacy.html`, `terms.html` |
 
-The Privacy Policy, Terms, T1 page and 404 page are generated. After editing anything in `tools/pages/`, rebuild them:
+## Editing pages and business facts
+
+Every HTML page, including the home page, is generated. Edit the files in `tools/pages/`, then rebuild:
 
 ```bash
 python3 tools/pages/build_pages.py
 ```
 
+- **Business facts** (legal name, address, email, reply time, prices) live in one place: `BUSINESS` at the top of `tools/pages/build_pages.py`. Page text uses tokens such as `{{STANDARD}}`, `{{PRIORITY}}`, `{{EMAIL}}` and `{{ADDRESS}}`, so a price change updates every page, the Terms and the structured data together.
+- **Page text** lives in `tools/pages/content/*.html`.
+- **Header, footer, cookie banner and the "How we keep you safe" list** are defined once in `build_pages.py`. Put `{{ASSURE}}` under any new "Start recovery" button to show the list.
+- **Structured data:** every page has the Organization schema (legal name, address, email, logo). The pricing page adds a Service schema with both prices as Offers. There is no phone, `sameAs` or rating schema, because there are no phone line, review profiles or reviews yet. Add `sameAs` links in `org_node()` once real profiles exist, and add ratings only for real, verifiable reviews.
+
 ## What's on the site
 
-- `index.html`: hero, features, use cases, how it works, the **Start recovery** form, safety, FAQ and a closing call to action. Every button leads to the same form.
-- `t1.html`: **Meet T1**, the page about Tranom's case agent. It covers T1's daily check-in loop with Roblox, what T1 always and never does, and how T1 is built and run on third-party processors. The home page links to it from the menu and from a teaser after "How it works".
-- `privacy.html` and `terms.html`: Privacy Policy and Terms and Conditions.
-- `404.html`: custom "page not found" page. Most static hosts serve it automatically.
-- Cookie consent banner on every page, with equal Accept and Reject buttons and a "Cookie settings" link in the footer.
-- `sitemap.xml`, `robots.txt`, `site.webmanifest`, favicons and a 1200×630 social preview image.
+- `index.html`: hero, an honest **Free vs. Tranom** comparison that links to the free Roblox Support form, use cases, how it works, the **Start recovery** form, **How we keep you safe**, FAQ (including "Is Tranom legit?" and "Why pay when Roblox support is free?") and a closing call to action.
+- `pricing.html`: Standard case $49 and Priority case $99, what both include, no hidden fees, the refund promise and how to request a refund.
+- `about.html`: company details (Tranom Technologies LLC, Spokane address), why Tranom exists, how people check T1, and what Tranom is and isn't.
+- `contact.html`: email, reply within one business day, business address, and a link to free Roblox Support.
+- `t1.html`: **Meet T1**, the case agent that follows up with Roblox every day.
+- `privacy.html`, `terms.html` and a custom `404.html`.
+- A short "How we keep you safe" list under every main "Start recovery" button: no passwords, codes or cookies; official Roblox channels only; not affiliated with Roblox; refund promise; registered business address.
+- Cookie consent banner, `sitemap.xml`, `robots.txt`, `site.webmanifest`, favicons and a social preview image.
 
 ### The recovery form
 
@@ -48,7 +56,7 @@ Analytics should only load after a visitor clicks **Accept**. Add the script lik
 
 ## Performance and quality
 
-Lighthouse (mobile) for the homepage: Performance 98, Accessibility 100, Best Practices 100, SEO 100. Before these changes it was 86, 96, 100 and 100.
+Lighthouse (mobile): every page scores 100 for Accessibility, Best Practices and SEO, and 96 to 100 for Performance.
 
 - Fonts are self-hosted (`assets/fonts`, SIL Open Font License), so no request goes to Google.
 - Images are WebP in several sizes with `srcset`, and only the hero loads up front.
@@ -68,12 +76,12 @@ It deploys as-is to Netlify, Cloudflare Pages, GitHub Pages, Vercel or any stati
 ## Project layout
 
 ```
-index.html, t1.html, privacy.html, terms.html, 404.html
+index.html, pricing.html, about.html, contact.html, t1.html, privacy.html, terms.html, 404.html   (generated)
 assets/css/styles.css   design tokens and all styles
 assets/js/main.js       mobile menu, cookie consent, form validation and spam checks
 assets/fonts/           Plus Jakarta Sans (self-hosted)
 assets/img/             WebP renders, icons, social image
-tools/pages/            generator and text for the T1, Privacy, Terms and 404 pages
+tools/pages/            page generator, business facts and the text of every page
 tools/render/           Three.js scenes that generate the images
 ```
 

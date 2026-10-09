@@ -1,0 +1,44 @@
+  <main id="main" class="contact-page">
+    <header class="page-head">
+      <p class="eyebrow">Contact</p>
+      <h1>Contact us</h1>
+      <p class="page-head__lead">We handle support by email. Write to us about a new case, an open case, a refund or anything else, and we'll reply {{REPLY}}.</p>
+    </header>
+
+    <section class="contact-grid" aria-label="Ways to reach us">
+      <article class="contact-card contact-card--main">
+        <p class="eyebrow">Email</p>
+        <a class="contact-card__big" href="mailto:{{EMAIL}}">{{EMAIL}}</a>
+        <div class="contact-card__actions">
+          <button type="button" class="btn btn--ghost btn--sm" data-copy="{{EMAIL}}">Copy address</button>
+          <p class="contact-card__status" data-copy-status role="status"></p>
+        </div>
+        <ul class="ticks">
+          <li>We reply {{REPLY}}, Monday to Friday.</li>
+          <li>For refunds, put "Refund request" in the subject.</li>
+          <li>Never send your password, 2-Step codes or cookies. We'll never ask for them.</li>
+        </ul>
+      </article>
+
+      <article class="contact-card">
+        <p class="eyebrow">Business address</p>
+        <address class="contact-card__address">{{LEGAL_NAME}}<br>{{STREET}}<br>{{CITY}}, {{REGION}} {{POSTAL}}<br>{{COUNTRY}}</address>
+        <p class="contact-card__note">We don't have a phone line. Email is the fastest way to reach us.</p>
+      </article>
+
+      <article class="contact-card">
+        <p class="eyebrow">New case</p>
+        <h2>Start with the form</h2>
+        <p>It's free to send, and it gives us what we need to reply with your next steps and the right plan.</p>
+        <a class="btn btn--navy" href="index.html#start">Start recovery</a>
+        {{ASSURE}}
+      </article>
+
+      <article class="contact-card">
+        <p class="eyebrow">Roblox Support</p>
+        <h2>Contact Roblox for free</h2>
+        <p>We're not part of Roblox. To reach Roblox directly, use its official support form. It costs nothing.</p>
+        <a class="link-arrow" href="{{ROBLOX_SUPPORT}}" target="_blank" rel="noopener"><span class="link-arrow__icon"><svg aria-hidden="true" focusable="false"><use href="#external"/></svg></span><span>Open Roblox Support</span></a>
+      </article>
+    </section>
+  </main>

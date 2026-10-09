@@ -22,6 +22,18 @@
     document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setOpen(false); });
   }
 
+  /* ---------- copy buttons (contact page) ---------- */
+  $$('[data-copy]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const status = btn.parentElement.querySelector('[data-copy-status]');
+      const say = (msg) => { if (status) status.textContent = msg; };
+      const text = btn.dataset.copy;
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(text).then(() => say('Copied.'), () => say(`Select and copy: ${text}`));
+      } else say(`Select and copy: ${text}`);
+    });
+  });
+
   /* ---------- cookie consent ----------
      Scripts that need consent are added as script tags with type="text/plain",
      data-consent-category="analytics" and data-src="https://..." (see README),
